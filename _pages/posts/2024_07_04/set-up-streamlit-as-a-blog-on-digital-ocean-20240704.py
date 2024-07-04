@@ -1,11 +1,15 @@
 import streamlit as st
 
 section_1 = """
-# Set up Streamlit to run as a blog on Digital Ocean
+# Set up Streamlit to run on Digital Ocean
 
-#### 2024/07/04
+###### 2024/07/04
 
-## Start your Streamlit blog locally
+### Background
+
+[Streamlit](https://streamlit.io) helps you quickly and easily turn Python scripts and data apps into shareable web apps.  This post will show you how to set up a Streamlit app on a Digital Ocean droplet.
+
+### Start your Streamlit blog locally
 
 Make a development directory:
 ```bash
@@ -79,7 +83,7 @@ Make sure to keep the url for `https://github.com/<YOUR_GITHUB_USERNAME>/my_stre
 
 Now you'll get your Streamlit blog working on Digital Ocean
 
-## Set up remote Digital Ocean host
+### Set up remote Digital Ocean host
 
 In your [Digital Ocean new droplet screen](https://cloud.digitalocean.com/droplets/new) create a new Ubuntu droplet.  Choose your authentication method, making sure to save the details of whichever method you choose.
 
@@ -284,20 +288,20 @@ sudo systemctl status nginx
 sudo systemctl status streamlit
 ```
 
-## Next steps
+### Next steps
 - Setting your own custom domain for the site
 - Using subdomains for different Streamlit apps
 - Making a basic deploy script so you can develop locally and deploy with one command
 
 
-## Feedback
+### Feedback
 Is always welcomed.  Please raise an issue at the [GitHub for this blog](https://github.com/spinoffblog/blog/issues) with any suggestions or changes.
 """
 
 st.markdown(section_1)
-st.image('./_pages/images/2024_07_04/_2024_07_04_01.png')
+st.image("./_pages/images/2024_07_04/_2024_07_04_01.png")
 st.markdown(section_2)
-st.image('./_pages/images/2024_07_04/_2024_07_04_02.png')
+st.image("./_pages/images/2024_07_04/_2024_07_04_02.png")
 st.markdown(section_3)
-st.image('./_pages/images/2024_07_04/_2024_07_04_03.png')
+st.image("./_pages/images/2024_07_04/_2024_07_04_03.png")
 st.markdown(section_4)
