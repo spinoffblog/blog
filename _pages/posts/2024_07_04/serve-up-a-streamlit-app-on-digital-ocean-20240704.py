@@ -289,6 +289,9 @@ sudo systemctl status nginx
 sudo systemctl status streamlit
 ```
 
+### Conclusion
+The page you are reading now is a Streamlit app running on a Digital Ocean droplet following the above instructions.  You can see the source code for this app on [GitHub](https://github.com/spinoffblog/blog).
+
 ### Next steps
 - Setting your own custom domain for the site
 - Using subdomains for different Streamlit apps
@@ -301,9 +304,9 @@ Is always welcomed.  Please raise an issue at the [GitHub for this app](https://
 
 
 st.markdown(section_1)
-st.image("./_pages/images/2024_07_04/_2024_07_04_01.png")
+st.image("_pages/images/2024_07_04/_2024_07_04_01.png")
 st.markdown(section_2)
-st.image("./_pages/images/2024_07_04/_2024_07_04_02.png")
+st.image("_pages/images/2024_07_04/_2024_07_04_02.png")
 st.markdown(section_3)
-st.image("./_pages/images/2024_07_04/_2024_07_04_03.png")
+st.image("_pages/images/2024_07_04/_2024_07_04_03.png")
 st.markdown(section_4)
