@@ -115,6 +115,7 @@ Create the necesssary Python environment and clone and setup your Streamlit app
 sudo su - streamlit_user
 cd /opt/my_streamlit_blog
 git clone https://github.com/<YOUR_GITHUB_USERNAME>/my_streamlit_blog.git .
+sudo chown -R streamlit_user:streamlit_user /opt/my_streamlit_blog
 python3 -m venv ./venv
 source venv/bin/activate
 pip install -r ./requirements.txt
