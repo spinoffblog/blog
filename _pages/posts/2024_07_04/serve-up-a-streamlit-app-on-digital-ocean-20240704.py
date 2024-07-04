@@ -7,13 +7,13 @@ section_1 = """
 
 ### Background
 
-[Streamlit](https://streamlit.io) helps you quickly and easily turn Python scripts and data apps into shareable web apps.  This post will show you how to set up a Streamlit app on a Digital Ocean droplet.
+[Streamlit](https://streamlit.io) helps you quickly and easily turn Python scripts and data apps into shareable web apps.  This post will show you how to set up a Streamlit app on a Digital Ocean droplet so you can share your app with the world.
 
-### Start your Streamlit blog locally
+### Start your Streamlit app locally
 
 Make a development directory:
 ```shellSession
-mkdir my_streamlit_blog && cd my_streamlit_blog
+mkdir my_streamlit_app && cd my_streamlit_app
 ```
 
 Add a Python `.gitignore` file:
@@ -39,7 +39,7 @@ pip install watchdog
 pip freeze > requirements.txt
 ```
 
-Add a "Hello World" blog post:
+Add a "Hello World" app post:
 ```shellSession
 echo "import streamlit as st
 
@@ -68,20 +68,20 @@ Save your work as a Git commit:
 git add . && git commit -m "First streamlit commit"
 ```
 
-Make a repo for your blog on GitHub.  Ensure you set it to "public" and do not check the box with "Add a README file".  It should look like the following:
+Make a repo for your app on GitHub.  Ensure you set it to "public" and do not check the box with "Add a README file".  It should look like the following:
 """
 
 section_2 = """
 Push your repo to your new remote:
 ```shellSession
-git remote add origin https://github.com/<YOUR_GITHUB_USERNAME>/my_streamlit_blog.git
+git remote add origin https://github.com/<YOUR_GITHUB_USERNAME>/my_streamlit_app.git
 git branch -M main
 git push -u origin main
 ```
 
-Make sure to keep the url for `https://github.com/<YOUR_GITHUB_USERNAME>/my_streamlit_blog.git` somewhere handy, you'll need it in a bit.
+Make sure to keep the url for `https://github.com/<YOUR_GITHUB_USERNAME>/my_streamlit_app.git` somewhere handy, you'll need it in a bit.
 
-Now you'll get your Streamlit blog working on Digital Ocean
+Now you'll get your Streamlit app working on Digital Ocean
 
 ### Set up remote Digital Ocean host
 
@@ -102,20 +102,20 @@ Make the necessary user:
 sudo adduser streamlit_user
 ```
 
-Navigate to the directory for your streamlit blog and clone it from GitHub, while setting necessary permissions:
+Navigate to the directory for your streamlit app and clone it from GitHub, while setting necessary permissions:
 ```shellSession
 cd /opt
-mkdir my_streamlit_blog
-sudo chown streamlit_user:streamlit_user /opt/my_streamlit_blog
+mkdir my_streamlit_app
+sudo chown streamlit_user:streamlit_user /opt/my_streamlit_app
 ```
 
 
 Create the necesssary Python environment and clone and setup your Streamlit app
 ```shellSession
 sudo su - streamlit_user
-cd /opt/my_streamlit_blog
-git clone https://github.com/<YOUR_GITHUB_USERNAME>/my_streamlit_blog.git .
-sudo chown -R streamlit_user:streamlit_user /opt/my_streamlit_blog
+cd /opt/my_streamlit_app
+git clone https://github.com/<YOUR_GITHUB_USERNAME>/my_streamlit_app.git .
+sudo chown -R streamlit_user:streamlit_user /opt/my_streamlit_app
 python3 -m venv ./venv
 source venv/bin/activate
 pip install -r ./requirements.txt
@@ -128,7 +128,7 @@ streamlit run app.py
 
 Your output should look like the below.  Try navigating to the URL which is shown as `External URL`.  Note that the IP address in your instance will be different.  Keep the IP address for your server handy, you'll need it in a bit:
 ```shellSession
-(venv) streamlit_user@ubuntu-s-1vcpu-512mb-10gb-nyc1-01:/opt/my_streamlit_blog$ streamlit run ./app.py 
+(venv) streamlit_user@ubuntu-s-1vcpu-512mb-10gb-nyc1-01:/opt/my_streamlit_app$ streamlit run ./app.py 
 
 Collecting usage statistics. To deactivate, set browser.gatherUsageStats to false.
 
@@ -160,8 +160,8 @@ After=network.target
 
 [Service]
 User=streamlit_user
-WorkingDirectory=/opt/my_streamlit_blog
-ExecStart=/opt/my_streamlit_blog/venv/bin/streamlit run app.py
+WorkingDirectory=/opt/my_streamlit_app
+ExecStart=/opt/my_streamlit_app/venv/bin/streamlit run app.py
 Restart=always
 
 [Install]
@@ -296,7 +296,7 @@ sudo systemctl status streamlit
 
 
 ### Feedback
-Is always welcomed.  Please raise an issue at the [GitHub for this blog](https://github.com/spinoffblog/blog/issues) with any suggestions or changes.
+Is always welcomed.  Please raise an issue at the [GitHub for this app](https://github.com/spinoffapp/app/issues) with any suggestions or changes.
 """
 
 
