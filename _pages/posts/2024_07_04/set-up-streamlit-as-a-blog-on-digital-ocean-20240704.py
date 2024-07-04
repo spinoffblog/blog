@@ -12,35 +12,35 @@ section_1 = """
 ### Start your Streamlit blog locally
 
 Make a development directory:
-```bash
+```shellSession
 mkdir my_streamlit_blog && cd my_streamlit_blog
 ```
 
 Add a Python `.gitignore` file:
-```bash
+```shellSession
 wget https://raw.githubusercontent.com/github/gitignore/main/Python.gitignore -O .gitignore
 ```
 
 Create a Git repo:
-```bash
+```shellSession
 git init
 ```
 
 Create a virtual environment:
-```bash
+```shellSession
 python -m venv ./venv
 source venv/bin/activate
 ```
 
 Install Streamlit and Watchdog:
-```bash
+```shellSession
 pip install streamlit
 pip install watchdog
 pip freeze > requirements.txt
 ```
 
 Add a "Hello World" blog post:
-```bash
+```shellSession
 echo "import streamlit as st
 
 st.title('Hello, Streamlit!')
@@ -48,12 +48,12 @@ st.write('This is a test app.')" > ./app.py
 ```
 
 Test the Streamlit app is working:
-```bash
+```shellSession
 streamlit run ./app.py
 ```
 
 Your browser should automatically open to your Streamlit app.  If it doesn't automatically open, navigate to the "Local" URL which is shown in your console.  You should see output in your console similar to the following:
-```bash
+```shellSession
 
   You can now view your Streamlit app in your browser.
 
@@ -64,7 +64,7 @@ Your browser should automatically open to your Streamlit app.  If it doesn't aut
 Stop the app in your console with `CTRL+c`
 
 Save your work as a Git commit:
-```bash
+```shellSession
 git add . && git commit -m "First streamlit commit"
 ```
 
@@ -73,7 +73,7 @@ Make a repo for your blog on GitHub.  Ensure you set it to "public" and do not c
 
 section_2 = """
 Push your repo to your new remote:
-```bash
+```shellSession
 git remote add origin https://github.com/<YOUR_GITHUB_USERNAME>/my_streamlit_blog.git
 git branch -M main
 git push -u origin main
@@ -92,18 +92,18 @@ Navigate to the dashboard for your droplet and click the `Console` button:
 
 section_3 = """
 Install `pip` so you can install Streamlit and other Python programs.
-```bash
+```shellSession
 apt install python3-pip
 apt install python3.12-venv
 ```
 
 Make the necessary user:
-```bash
+```shellSession
 sudo adduser streamlit_user
 ```
 
 Navigate to the directory for your streamlit blog and clone it from GitHub, while setting necessary permissions:
-```bash
+```shellSession
 cd /opt
 mkdir my_streamlit_blog
 sudo chown streamlit_user:streamlit_user /opt/my_streamlit_blog
@@ -111,7 +111,7 @@ sudo chown streamlit_user:streamlit_user /opt/my_streamlit_blog
 
 
 Create the necesssary Python environment and clone and setup your Streamlit app
-```bash
+```shellSession
 sudo su - streamlit_user
 cd /opt/my_streamlit_blog
 git clone https://github.com/<YOUR_GITHUB_USERNAME>/my_streamlit_blog.git .
@@ -122,12 +122,12 @@ pip install -r ./requirements.txt
 ```
 
 Test your app works:
-```bash
+```shellSession
 streamlit run app.py
 ```
 
 Your output should look like the below.  Try navigating to the URL which is shown as `External URL`.  Note that the IP address in your instance will be different.  Keep the IP address for your server handy, you'll need it in a bit:
-```bash
+```shellSession
 (venv) streamlit_user@ubuntu-s-1vcpu-512mb-10gb-nyc1-01:/opt/my_streamlit_blog$ streamlit run ./app.py 
 
 Collecting usage statistics. To deactivate, set browser.gatherUsageStats to false.
@@ -143,12 +143,12 @@ Collecting usage statistics. To deactivate, set browser.gatherUsageStats to fals
 Exit the app with `CTRL+c`
 
 Exit the `streamlit_user` session:
-```bash
+```shellSession
 exit
 ```
 
 Create the `.service` file to run Streamlit in the background as a service using [`systemd`](https://en.wikipedia.org/wiki/Systemd).
-```bash
+```shellSession
 sudo nano /etc/systemd/system/streamlit.service
 ```
 
@@ -171,27 +171,27 @@ WantedBy=multi-user.target
 Save and close the file (in nano, press Ctrl+X, then Y, then Enter)
 
 Reload `systemd`, start the Streamlit service, and enable the service to start on boot:
-```bash
+```shellSession
 sudo systemctl daemon-reload
 sudo systemctl start streamlit
 sudo systemctl enable streamlit
 ```
 
 Check the status of your service:
-```bash
+```shellSession
 sudo systemctl status streamlit
 ```
 
 Now to take care of [`nginx`](https://en.wikipedia.org/wiki/nginx) which will sit between the internet and the Streamlit application on your droplet.
 
 Install nginx if not already installed:
-```bash
+```shellSession
 sudo apt update
 sudo apt install nginx
 ```
 
 And create an `nginx` config file for your Streamlit app:
-```bash
+```shellSession
 sudo nano /etc/nginx/sites-available/streamlit
 ```
 
@@ -215,22 +215,22 @@ server {
 Save and close the file (in nano, press Ctrl+X, then Y, then Enter)
 
 Create a symlink to enable the site:
-```bash
+```shellSession
 sudo ln -s /etc/nginx/sites-available/streamlit /etc/nginx/sites-enabled
 ```
 
 Test the nginx configuration:
-```bash
+```shellSession
 sudo nginx -t
 ```
 
 If the test is successful, restart nginx:
-```bash
+```shellSession
 sudo systemctl restart nginx
 ```
 
 Create the systemd service file for nginx (if it doesn't already exist):
-```bash
+```shellSession
 sudo nano /etc/systemd/system/nginx.service
 ```
 
@@ -261,12 +261,12 @@ WantedBy=multi-user.target
 Save and close the file.
 
 Delete the default nginx configuration:
-```bash
+```shellSession
 sudo rm /etc/nginx/sites-enabled/default
 ```
 
 Reload `systemd` and enable required services:
-```bash
+```shellSession
 sudo systemctl daemon-reload
 sudo systemctl start nginx
 sudo systemctl enable nginx
@@ -274,7 +274,7 @@ sudo systemctl start streamlit
 ```
 
 Wait for a few seconds and restart nginx:
-```bash
+```shellSession
 sudo systemctl restart nginx
 ```
 
@@ -284,7 +284,7 @@ In your web browser, navigate to the IP address you saved earlier.  You should s
 section_4 = """
 
 You can also view the status of the nginx and Streamlit services:
-```bash
+```shellSession
 sudo systemctl status nginx
 sudo systemctl status streamlit
 ```
@@ -298,6 +298,7 @@ sudo systemctl status streamlit
 ### Feedback
 Is always welcomed.  Please raise an issue at the [GitHub for this blog](https://github.com/spinoffblog/blog/issues) with any suggestions or changes.
 """
+
 
 st.markdown(section_1)
 st.image("./_pages/images/2024_07_04/_2024_07_04_01.png")
