@@ -177,9 +177,9 @@ Check the status of your service:
 sudo systemctl status streamlit
 ```
 
-Now to take care of [`nginx`](https://en.wikipedia.org/wiki/Nginx) which will sit between the internet and the Streamlit application on your droplet.
+Now to take care of [`nginx`](https://en.wikipedia.org/wiki/nginx) which will sit between the internet and the Streamlit application on your droplet.
 
-Install Nginx if not already installed:
+Install nginx if not already installed:
 ```bash
 sudo apt update
 sudo apt install nginx
@@ -214,17 +214,17 @@ Create a symlink to enable the site:
 sudo ln -s /etc/nginx/sites-available/streamlit /etc/nginx/sites-enabled
 ```
 
-Test the Nginx configuration:
+Test the nginx configuration:
 ```bash
 sudo nginx -t
 ```
 
-If the test is successful, restart Nginx:
+If the test is successful, restart nginx:
 ```bash
 sudo systemctl restart nginx
 ```
 
-Create the systemd service file for Nginx (if it doesn't already exist):
+Create the systemd service file for nginx (if it doesn't already exist):
 ```bash
 sudo nano /etc/systemd/system/nginx.service
 ```
