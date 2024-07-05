@@ -299,7 +299,7 @@ The page you are reading now is a Streamlit app running on a Digital Ocean dropl
 
 
 ### Feedback
-Is always welcomed.  Please raise an issue at the [GitHub for this app](https://github.com/spinoffapp/app/issues) with any suggestions or changes.
+Is always welcomed.  Please raise an issue at the [GitHub for this app](https://github.com/spinoffapp/blog/issues) with any suggestions or changes.
 """
 
 
