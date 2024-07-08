@@ -160,7 +160,7 @@ ax3.yaxis.set_major_formatter(thousands_formatter)
 # Text content
 #
 f"""
-# Value of land in Cottesloe
+# Value of residential housing land in Cottesloe
 
 ###### 2024/07/05
 
@@ -170,9 +170,9 @@ Cottesloe is a beach-side suburb of Perth, Western Australia.
 
 It is known for its beaches, cafes, and relaxed lifestyle.
 
-This post will explore the current value of land in Cottesloe.
+This post will explore the current value of residential housing land in Cottesloe.
 
-The key focus will be on the question "What is the average value of a m² land in Cottesloe over the past 12 months?".  The post will be updated with sales data as it becomes available.  Check back for updates.
+The key focus will be on the question "What is the average value of a m² of residential land in Cottesloe over the past 12 months?".  The post will be updated with sales data as it becomes available.  Check back for updates.
 """
 # add an image
 st.image("./_pages/images/2024_07_05/cottesloe.jpg")
@@ -180,12 +180,12 @@ st.image("./_pages/images/2024_07_05/cottesloe.jpg")
 
 st.markdown("### Summary")
 st.markdown(
-    f"The average cost per m² in Cottesloe for houses in the past 12 months was \\${average_per_m2_in_2024:,.0f}.  Read on for methodology and data."
+    f"The average cost per m² in Cottesloe for residential housing land in the past 12 months was \\${average_per_m2_in_2024:,.0f}.  Read on for methodology and data."
 )
 st.markdown("#### Initial raw data")
 f"The initial data consists of {df.shape[0]} sales records in Cottesloe from {df['sale_date'].min()} to {df['sale_date'].max()}."
 st.write(truncated_df)
-"We need to remove the strata and multi-lot sales as these are not indicative of general land value.  Also need to remove sales less than $100,000, as these are likely outliers."
+"We need to remove the strata and multi-lot sales as these are not indicative of general residential land value.  Also need to remove sales less than $100,000, as these are likely outliers."
 st.markdown(
     "#### Data after removing strata, multi-lot, commercial sales, and outliers"
 )
