@@ -210,7 +210,7 @@ f"### Conclusion"
 f" The average cost per m² in {year_of_focus} for houses in Cottesloe was \\${average_per_m2_in_2024:,.0f}"
 f"### Next steps"
 """
-- Filter for only land sales
+- Filter for only land sales (and potential knockdowns?)
 - Consider how housing value fits into a model
 - Allow user to filter by street and or year
 
