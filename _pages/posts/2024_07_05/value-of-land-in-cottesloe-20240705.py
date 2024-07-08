@@ -3,22 +3,25 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.ticker import FuncFormatter
+from datetime import datetime, timedelta
 
 # Data processing
 #
 truncation_size = 100
-year_of_focus = 2023
+year_of_focus = 2024
 truncation_amount = 100000
 
-df = pd.read_csv("./_pages/data/2024_07_05/full_cott_real_estate_filtered.csv")
+df = pd.read_csv("./_pages/data/2024_07_05/cott_real_estate.csv")
 df = df.drop_duplicates(subset=["address", "sale_amount", "sale_date"], keep="first")
+# make "address" title case
+df["address"] = df["address"].str.title()
 truncated_df = df
 
 # "We need to remove the rows where 'property_status' == 'Strata'"
 filtered_df = truncated_df[
     (df["multi_lot_sale"] != "Y")
     & (df["property_status"] != "Strata")
-    & (df["data_source"] == "RES")
+    & (df["data_source"] == "residential")
     & (df["sale_amount"] > truncation_amount)
 ]
 
@@ -35,12 +38,21 @@ dollar_per_m2_array = (
     df_columns_dropped["sale_amount"] / df_columns_dropped["land_area"]
 ).to_numpy()
 
+
+# Get the date 12 months ago from today
+twelve_months_ago = datetime.now().date() - timedelta(days=365)
+df_columns_dropped["sale_date"] = pd.to_datetime(df_columns_dropped["sale_date"])
+# Remove time component, keeping only the date
+df_columns_dropped['sale_date'] = df_columns_dropped['sale_date'].dt.date
+
+# Filter the DataFrame
 df_truncated_sales = df_columns_dropped[
-    (df_columns_dropped["sale_date"].str.contains(str(year_of_focus)))
+    df_columns_dropped["sale_date"] > twelve_months_ago
 ]
+df_truncated_sales = df_truncated_sales[df_truncated_sales["dollar_per_m2"] > 500]
 
 average_per_m2_in_2024 = df_truncated_sales["dollar_per_m2"].mean()
-latest_year = df_truncated_sales["sale_date"].max().split("-")[0]
+total_sales_in_past_year = df_truncated_sales.shape[0]
 ##
 
 # Chart processing
@@ -124,7 +136,7 @@ ax2.set_title(f"Average cost per m² of properties in Cottesloe (all time)")
 
 ax4.set_xlabel("Cost ($ per m²)")
 ax4.set_ylabel("Number of properties sold")
-ax4.set_title(f"Average cost per m² of properties in Cottesloe ({latest_year})")
+ax4.set_title(f"Average cost per m² of properties in Cottesloe (past 12 months)")
 
 
 # Convert sale_date to datetime and extract year
@@ -160,17 +172,23 @@ It is known for its beaches, cafes, and relaxed lifestyle.
 
 This post will explore the current value of land in Cottesloe.
 
-The key focus will be on the question "What is the average value of a m² land in Cottesloe in {latest_year}?".  The post will be updated with sales data as it becomes available.  Check back for updates.
+The key focus will be on the question "What is the average value of a m² land in Cottesloe over the past 12 months?".  The post will be updated with sales data as it becomes available.  Check back for updates.
 """
 # add an image
 st.image("./_pages/images/2024_07_05/cottesloe.jpg")
 # st.image("https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Flive.staticflickr.com%2F3084%2F3251405982_3cc7b69cec_b.jpg&f=1&nofb=1&ipt=5a91db16c85b1bb7652136e06423c8c0bd873381198746ecc685cf9ab765f6b7&ipo=images", caption="Cottesloe Beach")
 
+st.markdown("### Summary")
+st.markdown(
+    f"The average cost per m² in Cottesloe for houses in the past 12 months was \\${average_per_m2_in_2024:,.0f}.  Read on for methodology and data."
+)
 st.markdown("#### Initial raw data")
 f"The initial data consists of {df.shape[0]} sales records in Cottesloe from {df['sale_date'].min()} to {df['sale_date'].max()}."
 st.write(truncated_df)
 "We need to remove the strata and multi-lot sales as these are not indicative of general land value.  Also need to remove sales less than $100,000, as these are likely outliers."
-st.markdown("#### Data after removing strata, multi-lot, commercial sales, and outliers")
+st.markdown(
+    "#### Data after removing strata, multi-lot, commercial sales, and outliers"
+)
 st.write(filtered_df)
 st.markdown("##### Property sales prices")
 st.pyplot(fig)
@@ -184,9 +202,19 @@ st.pyplot(fig3)
 
 # format truncation_amount as currency
 truncation_amount = f"${truncation_amount:,.0f}"
-f"Now to focus on latest year of data, {year_of_focus}, removing any outlier sales with prices below {truncation_amount}."
 f"##### Property cost per m² in {year_of_focus} (only property sales above {truncation_amount})"
+f"Now to focus on the past 12 months of sales data.  We will also remove outlier sales where the cost per m² is less than $500. There were {total_sales_in_past_year} sales in the past year."
+st.dataframe(data=df_truncated_sales, hide_index=True)
 st.pyplot(fig4)
-f"## *The average cost per m² in {year_of_focus} for houses in Cottesloe was \\${average_per_m2_in_2024:,.0f}*"
+f"### Conclusion"
+f" The average cost per m² in {year_of_focus} for houses in Cottesloe was \\${average_per_m2_in_2024:,.0f}"
+f"### Next steps"
+"""
+- Filter for only land sales
+- Consider how housing value fits into a model
+- Allow user to filter by street and or year
 
+### Feedback
+Is always welcomed.  Please raise an issue at the [GitHub for this app](https://github.com/spinoffblog/blog/issues) with any suggestions or changes.
+"""
 ##
