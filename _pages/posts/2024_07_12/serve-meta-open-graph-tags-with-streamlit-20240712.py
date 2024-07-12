@@ -241,6 +241,21 @@ keywords:
   -
 """
 
+section_5 = """
+You can also create a directory for static media files, such as images, and serve them from nginx.  This will allow you to include images in your meta tags.
+
+```shellSession
+mkdir /var/www/spinoff/media
+mkdir /var/www/spinoff/media/images
+```
+You can see images for this site are being served from `https://spinoff.blog/media/images/` - e.g. `https://spinoff.blog/media/images/serve-meta-open-graph-tags-with-streamlit-20240712.jpg` and these images are used in the above `meta.yaml` file.
+"""
+
+conclusion = """
+### Conclusion
+nginx is great as a reverse proxy for serving static html files with meta tags for Open Graph and Twitter cards.  It's a bit of effort, but it's worth it for the improved sharing experience on social media platforms and chat apps like iMessage etc.
+"""
+
 st.markdown(section_1)
 st.code(config, language="nginx", line_numbers=True)
 st.markdown(section_2)
@@ -249,3 +264,5 @@ st.markdown(section_3)
 st.code(individual_page_html, language="html", line_numbers=True)
 st.markdown(section_4)
 st.code(meta_yaml, language="yaml", line_numbers=True)
+st.markdown(section_5)
+st.markdown(conclusion)
