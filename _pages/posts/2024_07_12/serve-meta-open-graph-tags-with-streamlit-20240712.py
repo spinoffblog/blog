@@ -23,7 +23,13 @@ You'll generate the meta tags using a yaml template and a python script, which w
 
 Check out the previous post, [How to host a Streamlit app on Digital Ocean](./{previous_post_url}), to set up your server.
 
-### nginx
+### nginx config
+
+`ssh` into your server
+
+```shellSession
+ssh root@<YOUR_SERVER_IP>
+```
 
 Edit your nginx configuration to serve static html files.  You will recall fromt the previous post that the config is located at `/etc/nginx/sites-available/streamlit`.
 
@@ -66,13 +72,13 @@ server {
 """
 
 section_2 = """
+Save the configuration file using `Ctrl + O` and exit using `Ctrl + X`.
+
 The configuration file is set up to check the `/static_html` directory for static html files.  If it doesn't find one, it will proxy the request to the Streamlit app.
 
 The static html files contain the meta tags for Open Graph and Twitter cards.  These need to be pre-generated and served statically so they can be crawled.
 
 How to generate these files will be discussed later in the post.
-
-Save the configuration file using `Ctrl + O` and exit using `Ctrl + X`.
 
 Now test your nginx configuration:
     
@@ -242,13 +248,13 @@ keywords:
 """
 
 section_5 = """
-You can also create a directory for static media files, such as images, and serve them from nginx.  This will allow you to include images in your meta tags.
+You can also create a directory for static media files, such as images, and serve them from nginx.  This will allow you to include images in your meta tags and serve them from your own server.
 
 ```shellSession
 mkdir /var/www/spinoff/media
 mkdir /var/www/spinoff/media/images
 ```
-You can see images for this site are being served from `https://spinoff.blog/media/images/` - e.g. `https://spinoff.blog/media/images/serve-meta-open-graph-tags-with-streamlit-20240712.jpg` and these images are used in the above `meta.yaml` file.
+You can see images for this site are being served from `https://spinoff.blog/media/images/` - e.g. `https://spinoff.blog/media/images/serve-meta-open-graph-tags-with-streamlit-20240712.jpg` - and these images are used in the above `meta.yaml` file.
 """
 
 conclusion = """
