@@ -11,24 +11,17 @@ truncation_size = 100
 year_of_focus = 2024
 truncation_amount = 100000
 
-df = pd.read_csv("./_pages/data/2024_07_05/cott_real_estate.csv")
+df = pd.read_csv("./_pages/data/2024_07_08/cott_real_estate.csv")
 df = df.drop_duplicates(subset=["address", "sale_amount", "sale_date"], keep="first")
 # make "address" title case
 df["address"] = df["address"].str.title()
 truncated_df = df
-
-# "We need to remove the rows where 'property_status' == 'Strata'"
-filtered_df = truncated_df[
-    (df["multi_lot_sale"] != "Y")
-    & (df["property_status"] != "Strata")
-    & (df["data_source"] == "residential")
-    & (df["sale_amount"] > truncation_amount)
-]
-
+filtered_df = truncated_df
 filtered_array = filtered_df["sale_amount"].to_numpy()
 
 # Calculate $ per m2 for each row and convert to numpy array
-df_columns_dropped = filtered_df.drop(columns=["property_status", "multi_lot_sale"])
+df_columns_dropped = filtered_df.drop(columns=["multi_lot_sale"])
+
 df_columns_dropped["dollars_per_m2"] = (
     df_columns_dropped["sale_amount"] / df_columns_dropped["land_area"]
 ).round()
@@ -40,7 +33,7 @@ dollars_per_m2_array = (
 
 
 # Get the date 12 months ago from today
-twelve_months_ago = datetime.now().date() - timedelta(days=365)
+twelve_months_ago = datetime.now().date() - timedelta(days=1461)
 df_columns_dropped["sale_date"] = pd.to_datetime(df_columns_dropped["sale_date"])
 # Remove time component, keeping only the date
 df_columns_dropped['sale_date'] = df_columns_dropped['sale_date'].dt.date
@@ -51,12 +44,10 @@ df_truncated_sales = df_columns_dropped[
 ]
 df_truncated_sales = df_truncated_sales[df_truncated_sales["dollars_per_m2"] > 500]
 
-average_per_m2_in_2024 = df_truncated_sales["dollars_per_m2"].mean()
+average_per_m2_in_past_48_months = df_truncated_sales["dollars_per_m2"].mean()
 total_sales_in_past_year = df_truncated_sales.shape[0]
-##
 
 # Chart processing
-#
 fig, ax, n, bins, patches = None, None, None, None, None
 fig2, ax2, n2, bins2, patches2 = None, None, None, None, None
 
@@ -66,20 +57,6 @@ n, bins, patches = ax.hist(filtered_array, bins=10, edgecolor="black")
 
 fig2, ax2 = plt.subplots()
 n2, bins2, patches2 = ax2.hist(dollars_per_m2_array, bins=10, edgecolor="black")
-
-fig4, ax4 = plt.subplots()
-n4, bins4, patches4 = ax4.hist(
-    df_truncated_sales["dollars_per_m2"], bins=10, edgecolor="black"
-)
-y_min, y_max = plt.ylim()
-# Create new y-ticks with increments of 2
-new_yticks = np.arange(0, y_max + 2, 2)
-
-# Set the new y-ticks
-plt.yticks(new_yticks)
-
-# Optionally, you can adjust the y-axis limits to match the new ticks
-plt.ylim(0, new_yticks[-1])
 
 
 # Function to format x-axis labels
@@ -98,18 +75,18 @@ thousands_formatter = FuncFormatter(thousands)
 # Set the formatter to the x-axis
 ax.xaxis.set_major_formatter(millions_formatter)
 ax2.xaxis.set_major_formatter(thousands_formatter)
-ax4.xaxis.set_major_formatter(thousands_formatter)
+
 
 
 # Set the tick locations to match bin edges
 ax.set_xticks(bins)
 ax2.set_xticks(bins2)
-ax4.set_xticks(bins4)
+
 
 # Rotate and align the tick labels so they look better
 plt.setp(ax.get_xticklabels(), rotation=45, ha="right")
 plt.setp(ax2.get_xticklabels(), rotation=45, ha="right")
-plt.setp(ax4.get_xticklabels(), rotation=45, ha="right")
+
 
 # Add frequency labels on top of each bar
 for i in range(len(n)):
@@ -126,17 +103,13 @@ for i in range(len(n2)):
 plt.tight_layout()
 
 # Customize the plot
-ax.set_xlabel("Sales price (Millions of $)")
+ax.set_xlabel("Value (Millions of $)")
 ax.set_ylabel("Number of properties sold")
-ax.set_title("Sales price of properties in Cottesloe (all time)")
+ax.set_title("Sales price of empty residential land in Cottesloe (past 48 months)")
 
 ax2.set_xlabel("Cost ($ per m²)")
 ax2.set_ylabel("Number of properties sold")
-ax2.set_title(f"Average cost per m² of house+land in Cottesloe (all time)")
-
-ax4.set_xlabel("Cost ($ per m²)")
-ax4.set_ylabel("Number of properties sold")
-ax4.set_title(f"Average cost per m² of house+land in Cottesloe (past 12 months)")
+ax2.set_title(f"Average cost per m² of empty residential land in Cottesloe (past 48 months)")
 
 
 # Convert sale_date to datetime and extract year
@@ -148,69 +121,59 @@ hist_data = df_columns_dropped.groupby("year")["dollars_per_m2"].mean()
 
 # Create the histogram using matplotlib
 fig3, ax3 = plt.subplots(figsize=(12, 6))
-ax3.bar(hist_data.index, hist_data.values)
+ax3.bar(hist_data.index, hist_data.values, )
 ax3.set_xlabel("Year")
 ax3.set_ylabel("Average cost per m²")
-ax3.set_title("Average house+land cost per m² by year in Cottesloe")
+ax3.set_title("Average cost per m² of empty residential land in Cottesloe")
 ax3.yaxis.set_major_formatter(thousands_formatter)
+# Set specific years for x-axis ticks
+specific_years = [2020, 2021, 2022, 2023]
+ax3.set_xticks(specific_years)
+ax3.set_xticklabels(specific_years)
+#
 
-##
 
 
 # Text content
 #
-f"""
-# Value of residential house+land in Cottesloe
+previous_post_url = "/value-of-land-in-cottesloe-20240705"
+st.markdown(f"""
+# Value of empty residential blocks in Cottesloe
 
-###### 2024/07/05
+###### 2024/07/08
 
 ### Background
 
-Cottesloe is a beach-side suburb of Perth, Western Australia.
+Building on a <a href="{previous_post_url}" target="_self">previous post</a>, this post will explore the current value of empty residential blocks in Cottesloe.
 
-It is known for its beaches, cafes, and relaxed lifestyle.
-
-This post will explore the current value of residential house+land in Cottesloe.
-
-The key focus will be on the question "What is the average value of a m² of residential house+land land in Cottesloe over the past 12 months?".  The post will be updated with sales data as it becomes available.  Check back for updates.
-"""
+The key focus will be on the question "What is the average value of a m² of **empty** residential land in Cottesloe over the past 48 months?".  The post will be updated with sales data as it becomes available.  Check back for updates.
+""", unsafe_allow_html=True)
 # add an image
-st.image("./_pages/images/2024_07_05/cottesloe.jpg", caption="Cottesloe Beach")
+st.image("./_pages/images/2024_07_08/cottesloe.jpg", caption="Cottesloe, Western Australia")
 
 st.markdown("### Summary")
-st.metric("Average Cottesloe house+land cost per m²", f"${average_per_m2_in_2024:,.0f}")
+st.metric("Average Cottesloe vacant land cost per m²", f"${average_per_m2_in_past_48_months:,.0f}")
 st.markdown(
-    f"The average cost per m² in Cottesloe for residential house+land land in the past 12 months was :blue-background[\\${average_per_m2_in_2024:,.0f}].  Read on for methodology and data."
+    f"The average cost per m² in Cottesloe for vacant residential housing land in the past 48 months was :blue-background[\\${average_per_m2_in_past_48_months:,.0f}].  Read on for methodology and data."
 )
 st.markdown("#### Initial raw data")
-f"The initial data consists of {df.shape[0]:,.0f} sales records in Cottesloe from {df['sale_date'].min()} to {df['sale_date'].max()}."
-st.write(truncated_df)
-"We need to remove the strata and multi-lot sales as these are not indicative of general residential house+land value.  Also need to remove sales less than $100,000, as these are likely outliers."
-st.markdown(
-    "#### Data after removing strata, multi-lot, commercial sales, and outliers"
-)
-st.write(filtered_df)
-st.markdown("##### Property sales prices")
+f"The initial data consists of {df.shape[0]} sales records in Cottesloe from {df['sale_date'].min()} to {df['sale_date'].max()}.  There are not a lot of empty land sales in Cottesloe each year."
+
+df_columns_dropped = df_columns_dropped.drop(columns=["year"])
+st.dataframe(df_columns_dropped, hide_index=True)
+st.markdown("##### Empty land sales prices")
 st.pyplot(fig)
-st.markdown("##### Property cost per m²")
-"Now to determine the cost per m² for each property."
-st.write(df_columns_dropped)
+st.markdown("##### Empty land cost per m²")
 st.pyplot(fig2)
 
-st.markdown("##### Property house+land cost per m² over time")
+st.markdown("##### Empty land cost per m² over time")
 st.pyplot(fig3)
 
-# format truncation_amount as currency
-truncation_amount = f"${truncation_amount:,.0f}"
-f"##### Property cost per m² in {year_of_focus} (only property sales above {truncation_amount})"
-f"Now to focus on the past 12 months of sales data.  We will also remove outlier sales where the cost per m² is less than $500. There were {total_sales_in_past_year} sales in the past 12 months."
-st.dataframe(data=df_truncated_sales, hide_index=True)
-st.pyplot(fig4)
 f"### Conclusion"
-f" The average cost per m² for the past 12 months for houses in Cottesloe was :blue-background[\\${average_per_m2_in_2024:,.0f}]"
+f" Based on the above data, the average cost per m² in the past 48 months for empty residential housing land in Cottesloe was :blue-background[\\${average_per_m2_in_past_48_months:,.0f}]"
 f"### Next steps"
 """
-- Filter for only land sales (and potential knockdowns?)
+- Filter for potential knockdowns?
 - Consider how housing value fits into a model
 - Allow user to filter by street and or year
 

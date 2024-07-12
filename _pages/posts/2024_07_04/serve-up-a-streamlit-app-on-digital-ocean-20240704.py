@@ -28,7 +28,8 @@ git init
 
 Create a virtual environment:
 ```shellSession
-python -m venv ./venv
+sudo apt install python3.12-venv
+python3 -m venv ./venv
 source venv/bin/activate
 ```
 

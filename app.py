@@ -1,5 +1,8 @@
 import streamlit as st
 
+# TODO: make the home link not hard coded
+st.logo("_pages/images/logo/logo.png", link=None)
+
 # Pages
 home = st.Page("./_pages/home.py", title="Home", icon="🏠", url_path=None, default=True)
 categories = st.Page(
@@ -11,11 +14,22 @@ _2024_07_04 = st.Page(
 )
 _2024_07_05 = st.Page(
     "./_pages/posts/2024_07_05/value-of-land-in-cottesloe-20240705.py",
-    title="Value of land in Cottesloe",
+    title="Value of house+land in Cottesloe",
+)
+_2024_07_08 = st.Page(
+    "./_pages/posts/2024_07_08/value-of-empty-blocks-in-cottesloe-20240708.py",
+    title="Value of empty blocks in Cottesloe",
+)
+_2024_07_12 = st.Page(
+    "./_pages/posts/2024_07_12/serve-meta-open-graph-tags-with-streamlit-20240712.py",
+    title="Serve meta / Open Graph tags with Streamlit",
 )
 
 # Sidebar
-pages = {"": [home, categories], "Posts": [_2024_07_05, _2024_07_04]}
+pages = {
+    "": [home, categories],
+    "Posts": [_2024_07_12, _2024_07_08, _2024_07_05, _2024_07_04],
+}
 
 
 pg = st.navigation(pages=pages)
