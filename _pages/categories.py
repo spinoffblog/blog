@@ -4,6 +4,11 @@ st.title("Categories")
 
 st.subheader("Streamlit")
 st.page_link(
+    "_pages/posts/2024_07_12/serve-meta-open-graph-tags-with-streamlit-20240712.py",
+    label="Serve meta / Open Graph tags with Streamlit",
+    icon="2️⃣",
+)
+st.page_link(
     "_pages/posts/2024_07_04/serve-up-a-streamlit-app-on-digital-ocean-20240704.py",
     label="Set up Streamlit to run on Digital Ocean",
     icon="1️⃣",
