@@ -24,11 +24,15 @@ _2024_07_12 = st.Page(
     "./_pages/posts/2024_07_12/serve-meta-open-graph-tags-with-streamlit-20240712.py",
     title="Serve meta / Open Graph tags with Streamlit",
 )
+_2024_07_13 = st.Page(
+    "./_pages/posts/2024_07_13/value-of-empty-blocks-in-peppermint-grove-20240713.py",
+    title="Value of empty blocks in Peppermint Grove",
+)
 
 # Sidebar
 pages = {
     "": [home, categories],
-    "Posts": [_2024_07_12, _2024_07_08, _2024_07_05, _2024_07_04],
+    "Posts": [_2024_07_13, _2024_07_12, _2024_07_08, _2024_07_05, _2024_07_04],
 }
 
 
