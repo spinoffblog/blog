@@ -46,7 +46,9 @@ st.markdown(
 
 Building from a <a href="{previous_post_url}" target="_self">previous post</a> which analysed the value of empty residential blocks in Cottesloe, this post will focus on the value of empty residential blocks in Peppermint Grove.
 
-The key focus will be on the question "What was the average price of of **empty** residential land in Peppermint Grove over the past 8 years?".  The post will be updated with sales data as it becomes available.  Check back for updates.
+The key focus will be on the question "What was the average price of of **empty** residential land in Peppermint Grove over the past 8 years?".
+
+The post will be updated with sales data as it becomes available.  Check back for updates.
 """,
     unsafe_allow_html=True,
 )
