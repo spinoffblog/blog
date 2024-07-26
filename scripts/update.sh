@@ -18,10 +18,10 @@ rm -rf output/*
 python og_tag_generator.py
 cp output/* /var/www/spinoff/static_html/
 
-# copy all .jpg files to /var/www/spinoff/media/images/
-cp -r ../_pages/*.jpg /var/www/spinoff/media/images/
-# copy all .mp4 files to /var/www/spinoff/media/video/
-cp -r ../_pages/*.mp4 /var/www/spinoff/media/video/
+# Copy all .jpg files to /var/www/spinoff/media/images/
+find ../_pages -type f -name "*.jpg" -exec cp -v --update=none {} /var/www/spinoff/media/images/ \;
+# Copy all .mp4 files to /var/www/spinoff/media/video/
+find ../_pages -type f -name "*.mp4" -exec cp -v --update=none {} /var/www/spinoff/media/video/ \;
 
 sudo chmod 755 /var/www/spinoff/ && sudo chown -R www-data:www-data /var/www/spinoff/
 
