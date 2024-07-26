@@ -193,6 +193,7 @@ st.dataframe(summary)
 st.header("Raw Data")
 styled_filtered_df = filtered_df.drop(columns=["suburb"])
 styled_filtered_df["address"] = styled_filtered_df["address"].str.title()
+styled_filtered_df = styled_filtered_df.sort_values(by="sale_date", ascending=False)
 
 styled_filtered_df = styled_filtered_df[
     [
@@ -213,6 +214,7 @@ styled_filtered_df = styled_filtered_df.style.format(
         "sale_date": "{:%d/%m/%Y}",
     }
 )
+
 st.dataframe(styled_filtered_df, hide_index=True)
 
 # Add a download button for the filtered data
