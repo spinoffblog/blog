@@ -32,11 +32,16 @@ _2024_07_16 = st.Page(
     "./_pages/posts/2024_07_16/using-video-in-og-tags-20240716.py",
     title="Using video in og tags",
 )
+_2024_07_18 = st.Page(
+    "./_pages/posts/2024_07_18/property-value-tracker-20240718.py",
+    title="Property sales tracker",
+)
 
 # Sidebar
 pages = {
     "": [home, categories],
     "Posts": [
+        _2024_07_18,
         _2024_07_16,
         _2024_07_13,
         _2024_07_12,

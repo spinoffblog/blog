@@ -16,6 +16,11 @@ st.page_link(
 
 st.subheader("Real estate")
 st.page_link(
+    "./_pages/posts/2024_07_18/property-value-tracker-20240718.py",
+    label="Property sales tracker (beta)",
+    icon="4️⃣",
+)
+st.page_link(
     "_pages/posts/2024_07_13/value-of-empty-blocks-in-peppermint-grove-20240713.py",
     label="Value of empty residential blocks in Peppermint Grove",
     icon="3️⃣",
