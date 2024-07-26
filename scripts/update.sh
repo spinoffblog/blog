@@ -17,6 +17,7 @@ cd og_tag_generator
 rm -rf output/*
 python og_tag_generator.py
 cp output/* /var/www/spinoff/static_html/
+cd -
 
 # Copy all .jpg files to /var/www/spinoff/media/images/
 find ../_pages -type f -name "*.jpg" -exec cp -v --update=none {} /var/www/spinoff/media/images/ \;
@@ -25,5 +26,4 @@ find ../_pages -type f -name "*.mp4" -exec cp -v --update=none {} /var/www/spino
 
 sudo chmod 755 /var/www/spinoff/ && sudo chown -R www-data:www-data /var/www/spinoff/
 
-cd -
 sudo systemctl restart streamlit.service
