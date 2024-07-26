@@ -19,6 +19,9 @@ python og_tag_generator.py
 cp output/* /var/www/spinoff/static_html/
 cd -
 
+echo "Copying files to /var/www/spinoff/..."
+echo "Current directory: $(pwd)"
+
 # Copy all .jpg files to /var/www/spinoff/media/images/
 find ../_pages -type f -name "*.jpg" -exec cp -v --update=none {} /var/www/spinoff/media/images/ \;
 # Copy all .mp4 files to /var/www/spinoff/media/video/
