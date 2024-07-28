@@ -34,5 +34,6 @@ sudo systemctl restart real_estate_streamlit.service
 
 echo "Cleaning up git repository..."
 git clean -f
+git reset --hard HEAD
 
 exit 0
