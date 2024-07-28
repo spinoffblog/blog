@@ -30,3 +30,8 @@ find ../_pages -type f -name "*.mp4" -exec cp -v --update=none {} /var/www/spino
 sudo chmod 755 /var/www/spinoff/ && sudo chown -R www-data:www-data /var/www/spinoff/
 
 sudo systemctl restart streamlit.service
+
+echo "Cleaning up git repository..."
+git clean -f
+
+exit 0
