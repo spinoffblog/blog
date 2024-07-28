@@ -1,5 +1,7 @@
 import streamlit as st
 
+st.set_page_config(page_title="The Spinoff Blog - Home")
+
 # TODO: make the home link not hard coded
 st.logo("_pages/images/logo/logo.png", link=None)
 

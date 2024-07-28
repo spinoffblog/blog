@@ -25,6 +25,7 @@ geojson_data = {
 
 
 def main():
+    st.set_page_config(page_title="Spinoff - Real Estate")
     st.title("GeoJSON Map with Clickable Popup")
 
     # Create a map centered on the GeoJSON coordinates
