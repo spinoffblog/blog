@@ -14,16 +14,34 @@ sys.path.append(str(shared_dir))
 # Now we can import the land_record_component
 from land_record_details_panel import land_record_details_panel  # noqa
 from land_sales_panel import land_sales_panel  # noqa
+from land_sales_suburb_comparison_panel import (
+    land_sales_suburb_comparison_panel,
+)  # noqa
 
-BASE_URL = "http://10.147.19.200:8000/api/landrecord/"
+# TODO: make this ENV or similar
+HOST = "http://localhost"
+BASE_URL = f"{HOST}:8000/api/"
 
 
+@st.cache_data
 def fetch_record(id):
-    response = requests.get(f"{BASE_URL}{id}/")
+    response = requests.get(f"{BASE_URL}landrecord/{id}/")
     if response.status_code == 200:
         return response.json()
     else:
         st.error(f"Failed to fetch data for ID {id}")
+        return None
+
+
+@st.cache_data
+def fetch_comparison_land_sales(suburb):
+    response = requests.get(
+        f"{BASE_URL}suburb-latest-landsalerecord/sales-by-suburb/?suburb={suburb}"
+    )
+    if response.status_code == 200:
+        return response.json()
+    else:
+        st.error(f"Failed to fetch data for suburb {suburb}")
         return None
 
 
@@ -62,9 +80,12 @@ id = st.query_params.get("id")
 
 if id:
     record = fetch_record(id)
+    comparison_sales = fetch_comparison_land_sales(record["city"])
+    print(comparison_sales)
     if record:
         land_record_details_panel(record)
         land_sales_panel(record)
+        land_sales_suburb_comparison_panel(record, comparison_sales)
 
         # Display zoning information
         # if record["zoning"]:
