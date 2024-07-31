@@ -25,35 +25,53 @@ geojson_data = {
 
 
 def main():
-    st.set_page_config(page_title="Spinoff - Real Estate")
-    st.title("GeoJSON Map with Clickable Popup")
+    # st.set_page_config(page_title="Spinoff - Real Estate")
+    st.set_page_config(page_title="Data manager", page_icon=":material/edit:")
 
-    # Create a map centered on the GeoJSON coordinates
-    m = folium.Map(location=[37.7749, -122.4194], zoom_start=12)
+    # add "/subdomains/realestate/property_list.py" page
+    property_list = st.Page(
+        "./subdomains/realestate/pages/property_list.py",
+        title="Property List",
+        icon="🏠",
+        url_path=None,
+        default=True,
+    )
+    property_details = st.Page(
+        "./subdomains/realestate/pages/property_details.py",
+        title="Property Details",
+        icon=None,
+        url_path=None,
+        default=False,
+    )
+    pg = st.navigation(pages=[property_list, property_details])
+    pg.run()
 
-    # Function to create popup content
-    def create_popup(feature):
-        return folium.Popup(
-            f"Name: {feature['properties']['name']}<br>"
-            f"Description: {feature['properties']['description']}",
-            max_width=300,
-        )
+    # # Create a map centered on the GeoJSON coordinates
+    # m = folium.Map(location=[37.7749, -122.4194], zoom_start=12)
 
-    # Add the GeoJSON data to the map with popup
-    folium.GeoJson(
-        geojson_data,
-        name="geojson",
-        style_function=lambda feature: {
-            "fillColor": "blue",
-            "color": "black",
-            "weight": 2,
-            "fillOpacity": 0.3,
-        },
-        popup=create_popup(geojson_data),
-    ).add_to(m)
+    # # Function to create popup content
+    # def create_popup(feature):
+    #     return folium.Popup(
+    #         f"Name: {feature['properties']['name']}<br>"
+    #         f"Description: {feature['properties']['description']}",
+    #         max_width=300,
+    #     )
 
-    # Display the map
-    folium_static(m)
+    # # Add the GeoJSON data to the map with popup
+    # folium.GeoJson(
+    #     geojson_data,
+    #     name="geojson",
+    #     style_function=lambda feature: {
+    #         "fillColor": "blue",
+    #         "color": "black",
+    #         "weight": 2,
+    #         "fillOpacity": 0.3,
+    #     },
+    #     popup=create_popup(geojson_data),
+    # ).add_to(m)
+
+    # # Display the map
+    # folium_static(m)
 
 
 if __name__ == "__main__":
