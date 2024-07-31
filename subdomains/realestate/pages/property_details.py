@@ -14,10 +14,9 @@ sys.path.append(str(shared_dir))
 # Now we can import the land_record_component
 from land_record_details_panel import land_record_details_panel  # noqa
 from land_sales_panel import land_sales_panel  # noqa
-from land_sales_per_m2_comparison_panel import land_sales_per_m2_comparison_panel  # noqa
-from land_sales_suburb_comparison_panel import (
-    land_sales_suburb_comparison_panel,
-)  # noqa
+from land_sales_suburb_sale_curve_panel import land_sales_suburb_sale_curve_panel # noqa
+from land_sales_suburb_house_and_land_per_m2_curve_panel import land_sales_suburb_house_and_land_per_m2_curve_panel # noqa
+from land_sales_suburb_scatter_plot_panel import land_sales_suburb_scatter_plot_panel # noqa
 
 # TODO: make this ENV or similar
 HOST = "http://localhost"
@@ -90,8 +89,9 @@ if id:
     if record:
         land_record_details_panel(record)
         land_sales_panel(record)
-        land_sales_suburb_comparison_panel(record, comparison_sales)
-        land_sales_per_m2_comparison_panel(record, comparison_sales)
+        land_sales_suburb_sale_curve_panel(record, comparison_sales)
+        land_sales_suburb_house_and_land_per_m2_curve_panel(record, comparison_sales)
+        land_sales_suburb_scatter_plot_panel(record, comparison_sales)
 
         # Display zoning information
         # if record["zoning"]:
