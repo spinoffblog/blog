@@ -19,6 +19,82 @@ def land_sales_suburb_comparison_panel(subject_property, other_sales):
     df = pd.DataFrame(other_sales)
     df["date"] = pd.to_datetime(df["date"])
     df["address"] = df["house_number"] + " " + df["road"]
+    df["is_subject"] = False  # Explicitly set is_subject to False for all other sales
+
+    def create_price_curve_chart(df, subject_price, subject_address):
+        # Create a DataFrame for the subject property
+        subject_df = pd.DataFrame(
+            {
+                "amount": [subject_price],
+                "address": [subject_address],
+                "is_subject": [True],
+            }
+        )
+
+        # Combine all sales including the subject property
+        all_sales = pd.concat([df, subject_df], ignore_index=True)
+
+        # Sort by price
+        all_sales = all_sales.sort_values("amount")
+
+        # Add rank column
+        all_sales["rank"] = range(1, len(all_sales) + 1)
+
+        # Calculate percentile
+        all_sales["percentile"] = all_sales["rank"] / len(all_sales) * 100
+
+        # Create the bar chart
+        fig = px.bar(
+            all_sales,
+            x="rank",
+            y="amount",
+            hover_data=["address", "percentile"],
+            labels={
+                "address": "Address",
+                "rank": "Rank",
+                "amount": "Sale Price ($)",
+                "percentile": "Percentile",
+            },
+            title="Price Curve: Neighborhood Sales",
+        )
+
+        # Highlight the subject property
+        subject_data = all_sales[all_sales["is_subject"] == True]
+        if not subject_data.empty:
+            fig.add_trace(
+                go.Bar(
+                    x=[subject_data["rank"].iloc[0]],
+                    y=[subject_data["amount"].iloc[0]],
+                    name="Subject Property",
+                    marker_color="red",
+                )
+            )
+
+        # Customize the layout
+        fig.update_layout(
+            xaxis_title="Properties (Ranked by Price)",
+            yaxis_title="Sale Price ($)",
+            yaxis_tickformat="$,.0f",
+            showlegend=True,
+        )
+
+        return fig, subject_data.iloc[0] if not subject_data.empty else None
+
+    # Create and display the price curve chart
+    price_curve_fig, subject_row = create_price_curve_chart(
+        df, subject_price, subject_address
+    )
+    st.plotly_chart(price_curve_fig)
+
+    # Display subject property's position in the price curve
+    if subject_row is not None:
+        st.write(f"Subject Property Position:")
+        st.write(
+            f"Rank: {len(df) + 1 - subject_row['rank']}th most expensive out of {len(df) + 1} sales"
+        )
+        st.write(f"Percentile: {subject_row['percentile']:.2f}%")
+    else:
+        st.write("Unable to determine subject property position.")
 
     # Create the histogram
     fig = go.Figure()
@@ -112,90 +188,3 @@ def land_sales_suburb_comparison_panel(subject_property, other_sales):
 
     # Display the scatter plot in Streamlit
     st.plotly_chart(fig_scatter)
-
-    # Create a price curve table
-
-    def create_price_curve_chart(df, subject_price, subject_address):
-        # Combine all sales including the subject property
-        all_sales = df.copy()
-        all_sales = pd.concat(
-            [
-                all_sales,
-                pd.DataFrame(
-                    {
-                        "amount": [subject_price],
-                        "address": [subject_address],
-                        "is_subject": [True],
-                    }
-                ),
-            ],
-            ignore_index=True,
-        )
-
-        # Sort by price
-        all_sales = all_sales.sort_values("amount")
-
-        # Add rank column
-        all_sales["rank"] = range(1, len(all_sales) + 1)
-
-        # Calculate percentile
-        all_sales["percentile"] = all_sales["rank"] / len(all_sales) * 100
-
-        # Create the bar chart
-        fig = px.bar(
-            all_sales,
-            x="rank",
-            y="amount",
-            hover_data=["address", "percentile"],
-            labels={
-                "rank": "Rank",
-                "amount": "Sale Price ($)",
-                "percentile": "Percentile",
-            },
-            title="Price Curve: Neighborhood Sales",
-        )
-
-        # Highlight the subject property
-        subject_index = all_sales[all_sales["is_subject"]].index[0]
-        fig.add_trace(
-            go.Bar(
-                x=[all_sales.loc[subject_index, "rank"]],
-                y=[all_sales.loc[subject_index, "amount"]],
-                name="Subject Property",
-                marker_color="red",
-            )
-        )
-
-        # Customize the layout
-        fig.update_layout(
-            xaxis_title="Properties (Ranked by Price)",
-            yaxis_title="Sale Price ($)",
-            yaxis_tickformat="$,.0f",
-            showlegend=True,
-        )
-
-        return fig, all_sales[all_sales["is_subject"]].iloc[0]
-
-    # Create and display the price curve chart
-    price_curve_fig, subject_row = create_price_curve_chart(
-        df, subject_price, subject_address
-    )
-    st.plotly_chart(price_curve_fig)
-
-    # Display subject property's position in the price curve
-    st.write(f"Subject Property Position:")
-    st.write(f"Rank: {subject_row['rank']} out of {len(df) + 1}")
-    st.write(f"Percentile: {subject_row['percentile']:.2f}%")
-
-
-# Example usage (commented out as it's part of the component, not the main app)
-# import json
-#
-# # Load JSON data (replace this with how you actually get the JSON data)
-# with open('subject_property.json', 'r') as file:
-#     subject_property = json.load(file)
-#
-# with open('other_sales.json', 'r') as file:
-#     other_sales = json.load(file)
-#
-# neighborhood_sales_comparison(subject_property, other_sales)
