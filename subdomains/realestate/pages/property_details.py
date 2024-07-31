@@ -22,6 +22,7 @@ from land_sales_suburb_scatter_plot_panel import (
     land_sales_suburb_scatter_plot_panel,
 )  # noqa
 from land_record_zoning_panel import land_record_zoning_panel  # noqa
+from land_record_financials_panel import land_record_financials_panel  # noqa
 
 # TODO: make this ENV or similar
 HOST = "http://localhost"
@@ -78,6 +79,7 @@ if id:
     if record:
         land_record_details_panel(record)
         land_sales_panel(record)
+        land_record_financials_panel(record)
         land_sales_suburb_sale_curve_panel(record, comparison_sales)
         land_sales_suburb_house_and_land_per_m2_curve_panel(record, comparison_sales)
         land_sales_suburb_scatter_plot_panel(record, comparison_sales)
