@@ -7,12 +7,13 @@ from datetime import datetime
 from pathlib import Path
 
 # Add the shared directory to the Python path
+# TODO: make the project a proper Python project and use relative imports
 shared_dir = Path(__file__).parent.parent.parent.parent / "shared"
-print(shared_dir)
 sys.path.append(str(shared_dir))
 
 # Now we can import the land_record_component
 from land_record_details_panel import land_record_details_panel  # noqa
+from land_sales_panel import land_sales_panel  # noqa
 
 BASE_URL = "http://10.147.19.200:8000/api/landrecord/"
 
@@ -50,6 +51,7 @@ def format_date(date_str):
     return datetime.strptime(date_str, "%Y-%m-%d").strftime("%B %d, %Y")
 
 
+# TODO: make this more cohesive and better organized
 css_example = """                                                                                                                                                      
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 """
@@ -62,6 +64,7 @@ if id:
     record = fetch_record(id)
     if record:
         land_record_details_panel(record)
+        land_sales_panel(record)
 
         # Display zoning information
         # if record["zoning"]:

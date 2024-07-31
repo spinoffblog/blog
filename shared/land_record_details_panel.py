@@ -2,12 +2,8 @@ import streamlit as st
 
 
 def land_record_details_panel(record):
-    # Display the land record details
-    # st.header(f"Land Record: {record_id}")
-    # Display general information
     st.write(f"## {record['house_number']} {record['road'].title()}")
     st.write(f"### {record['city'].title()}, {record['state']}")
-
     # TODO: make zoning safe
     text_with_icons = f"""
     <i class="fa-solid fa-maximize"></i>   {record['land_area']} m² <br />
