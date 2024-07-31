@@ -14,6 +14,7 @@ sys.path.append(str(shared_dir))
 # Now we can import the land_record_component
 from land_record_details_panel import land_record_details_panel  # noqa
 from land_sales_panel import land_sales_panel  # noqa
+from land_sales_per_m2_comparison_panel import land_sales_per_m2_comparison_panel  # noqa
 from land_sales_suburb_comparison_panel import (
     land_sales_suburb_comparison_panel,
 )  # noqa
@@ -39,7 +40,12 @@ def fetch_comparison_land_sales(suburb):
         f"{BASE_URL}suburb-latest-landsalerecord/sales-by-suburb/?suburb={suburb}"
     )
     if response.status_code == 200:
-        return response.json()
+        # add dollars_per_m2 to response
+        result = []
+        for sale in response.json():
+            sale["dollars_per_m2"] = sale["amount"] / sale["land_area"]
+            result.append(sale)
+        return result
     else:
         st.error(f"Failed to fetch data for suburb {suburb}")
         return None
@@ -81,11 +87,11 @@ id = st.query_params.get("id")
 if id:
     record = fetch_record(id)
     comparison_sales = fetch_comparison_land_sales(record["city"])
-    print(comparison_sales)
     if record:
         land_record_details_panel(record)
         land_sales_panel(record)
         land_sales_suburb_comparison_panel(record, comparison_sales)
+        land_sales_per_m2_comparison_panel(record, comparison_sales)
 
         # Display zoning information
         # if record["zoning"]:
