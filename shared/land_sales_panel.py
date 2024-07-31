@@ -1,6 +1,7 @@
 import streamlit as st
-import plotly.express as px
 import pandas as pd
+
+# import plotly.express as px
 
 
 def land_sales_panel(json_data):
@@ -26,7 +27,7 @@ def land_sales_panel(json_data):
     st.dataframe(for_table)
 
     # Create the Plotly Express scatter plot with line
-    # 
+    #
     # fig = px.scatter(
     #     df,
     #     x="date",
@@ -50,7 +51,6 @@ def land_sales_panel(json_data):
 
     # # Display the chart in Streamlit
     # st.plotly_chart(fig)
-
 
     # Example usage (commented out as it's part of the component, not the main app)
     # import json

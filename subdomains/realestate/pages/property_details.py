@@ -1,8 +1,6 @@
 import streamlit as st
 import sys
 import requests
-import folium
-from streamlit_folium import folium_static
 from datetime import datetime
 from pathlib import Path
 
@@ -14,9 +12,16 @@ sys.path.append(str(shared_dir))
 # Now we can import the land_record_component
 from land_record_details_panel import land_record_details_panel  # noqa
 from land_sales_panel import land_sales_panel  # noqa
-from land_sales_suburb_sale_curve_panel import land_sales_suburb_sale_curve_panel # noqa
-from land_sales_suburb_house_and_land_per_m2_curve_panel import land_sales_suburb_house_and_land_per_m2_curve_panel # noqa
-from land_sales_suburb_scatter_plot_panel import land_sales_suburb_scatter_plot_panel # noqa
+from land_sales_suburb_sale_curve_panel import (
+    land_sales_suburb_sale_curve_panel,
+)  # noqa
+from land_sales_suburb_house_and_land_per_m2_curve_panel import (
+    land_sales_suburb_house_and_land_per_m2_curve_panel,
+)  # noqa
+from land_sales_suburb_scatter_plot_panel import (
+    land_sales_suburb_scatter_plot_panel,
+)  # noqa
+from land_record_zoning_panel import land_record_zoning_panel  # noqa
 
 # TODO: make this ENV or similar
 HOST = "http://localhost"
@@ -50,22 +55,6 @@ def fetch_comparison_land_sales(suburb):
         return None
 
 
-def display_map(geometry):
-    # Create a map centered on the property
-    coordinates = geometry["coordinates"][0][0]
-    center_lat = sum(coord[1] for coord in coordinates) / len(coordinates)
-    center_lon = sum(coord[0] for coord in coordinates) / len(coordinates)
-    m = folium.Map(location=[center_lat, center_lon], zoom_start=18)
-
-    # Add the GeoJSON to the map
-    folium.GeoJson(
-        geometry, style_function=lambda x: {"fillColor": "red", "color": "black"}
-    ).add_to(m)
-
-    # Display the map
-    folium_static(m)
-
-
 def format_currency(amount):
     return f"${amount:,}"
 
@@ -92,6 +81,7 @@ if id:
         land_sales_suburb_sale_curve_panel(record, comparison_sales)
         land_sales_suburb_house_and_land_per_m2_curve_panel(record, comparison_sales)
         land_sales_suburb_scatter_plot_panel(record, comparison_sales)
+        land_record_zoning_panel(record)
 
         # Display zoning information
         # if record["zoning"]:
@@ -105,10 +95,6 @@ if id:
         # st.write("## Land Sale History")
         # for sale in record["land_sale_records"]:
         #     st.write(f"{format_date(sale['date'])}: {format_currency(sale['amount'])}")
-
-        # # Display the map
-        # st.write("## Property Location")
-        # display_map(record["geometry"])
 
         # # Display the full JSON data
         # with st.expander("View Full Record Data"):
