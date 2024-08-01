@@ -57,6 +57,7 @@ rich==13.7.1
 rpds-py==0.18.1
 rsa==4.9
 seaborn==0.13.2
+setuptools==72.1.0
 shapely==2.0.5
 six==1.16.0
 smmap==5.0.1
