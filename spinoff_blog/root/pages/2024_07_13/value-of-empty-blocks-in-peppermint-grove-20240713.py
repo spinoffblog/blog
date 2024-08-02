@@ -6,7 +6,7 @@ import pandas as pd
 from matplotlib.ticker import MaxNLocator
 
 
-df = pd.read_csv("./_pages/data/2024_07_13/pg_real_estate.csv")
+df = pd.read_csv("spinoff_blog/root/data/2024_07_13/pg_real_estate.csv")
 
 # filter df for dates only in the past 96 months
 # Calculate the date 48 months ago from today

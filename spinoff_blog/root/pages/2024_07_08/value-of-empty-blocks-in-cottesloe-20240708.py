@@ -1,6 +1,5 @@
 import streamlit as st
 import pandas as pd
-import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib.ticker import FuncFormatter
 from datetime import datetime, timedelta
@@ -11,7 +10,7 @@ truncation_size = 100
 year_of_focus = 2024
 truncation_amount = 100000
 
-df = pd.read_csv("./_pages/data/2024_07_08/cott_real_estate.csv")
+df = pd.read_csv("spinoff_blog/root/data/2024_07_08/cott_real_estate.csv")
 df = df.drop_duplicates(subset=["address", "sale_amount", "sale_date"], keep="first")
 # make "address" title case
 df["address"] = df["address"].str.title()
@@ -36,7 +35,7 @@ dollars_per_m2_array = (
 twelve_months_ago = datetime.now().date() - timedelta(days=1461)
 df_columns_dropped["sale_date"] = pd.to_datetime(df_columns_dropped["sale_date"])
 # Remove time component, keeping only the date
-df_columns_dropped['sale_date'] = df_columns_dropped['sale_date'].dt.date
+df_columns_dropped["sale_date"] = df_columns_dropped["sale_date"].dt.date
 
 # Filter the DataFrame
 df_truncated_sales = df_columns_dropped[
@@ -77,7 +76,6 @@ ax.xaxis.set_major_formatter(millions_formatter)
 ax2.xaxis.set_major_formatter(thousands_formatter)
 
 
-
 # Set the tick locations to match bin edges
 ax.set_xticks(bins)
 ax2.set_xticks(bins2)
@@ -109,7 +107,9 @@ ax.set_title("Sales price of empty residential land in Cottesloe (past 48 months
 
 ax2.set_xlabel("Cost ($ per m²)")
 ax2.set_ylabel("Number of properties sold")
-ax2.set_title(f"Average cost per m² of empty residential land in Cottesloe (past 48 months)")
+ax2.set_title(
+    f"Average cost per m² of empty residential land in Cottesloe (past 48 months)"
+)
 
 
 # Convert sale_date to datetime and extract year
@@ -121,7 +121,10 @@ hist_data = df_columns_dropped.groupby("year")["dollars_per_m2"].mean()
 
 # Create the histogram using matplotlib
 fig3, ax3 = plt.subplots(figsize=(12, 6))
-ax3.bar(hist_data.index, hist_data.values, )
+ax3.bar(
+    hist_data.index,
+    hist_data.values,
+)
 ax3.set_xlabel("Year")
 ax3.set_ylabel("Average cost per m²")
 ax3.set_title("Average cost per m² of empty residential land in Cottesloe")
@@ -133,11 +136,11 @@ ax3.set_xticklabels(specific_years)
 #
 
 
-
 # Text content
 #
 previous_post_url = "/value-of-land-in-cottesloe-20240705"
-st.markdown(f"""
+st.markdown(
+    f"""
 # Value of empty residential blocks in Cottesloe
 
 ###### 2024/07/08
@@ -147,12 +150,19 @@ st.markdown(f"""
 Building on a <a href="{previous_post_url}" target="_self">previous post</a>, this post will explore the current value of empty residential blocks in Cottesloe.
 
 The key focus will be on the question "What is the average value of a m² of **empty** residential land in Cottesloe over the past 48 months?".  The post will be updated with sales data as it becomes available.  Check back for updates.
-""", unsafe_allow_html=True)
+""",
+    unsafe_allow_html=True,
+)
 # add an image
-st.image("./_pages/images/2024_07_08/cottesloe.jpg", caption="Cottesloe, Western Australia")
+st.image(
+    "spinoff_blog/root/images/2024_07_08/cottesloe.jpg", caption="Cottesloe, Western Australia"
+)
 
 st.markdown("### Summary")
-st.metric("Average Cottesloe vacant land cost per m²", f"${average_per_m2_in_past_48_months:,.0f}")
+st.metric(
+    "Average Cottesloe vacant land cost per m²",
+    f"${average_per_m2_in_past_48_months:,.0f}",
+)
 st.markdown(
     f"The average cost per m² in Cottesloe for vacant residential housing land in the past 48 months was :blue-background[\\${average_per_m2_in_past_48_months:,.0f}].  Read on for methodology and data."
 )

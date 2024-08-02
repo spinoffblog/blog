@@ -11,7 +11,7 @@ truncation_size = 100
 year_of_focus = 2024
 truncation_amount = 100000
 
-df = pd.read_csv("./_pages/data/2024_07_05/cott_real_estate.csv")
+df = pd.read_csv("spinoff_blog/root/data/2024_07_05/cott_real_estate.csv")
 df = df.drop_duplicates(subset=["address", "sale_amount", "sale_date"], keep="first")
 # make "address" title case
 df["address"] = df["address"].str.title()

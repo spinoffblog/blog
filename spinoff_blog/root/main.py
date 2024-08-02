@@ -1,15 +1,9 @@
 import streamlit as st
 
-# from spinoff_blog.root.pages.home.home import streamlit_page as home_streamlit_page
-
-# from spinoff_blog.root.pages.categories.categories import (
-#     streamlit_page as categories_streamlit_page,
-# )
-
 
 def main():
     # TODO: make the home link not hard coded
-    # st.logo("_pages/images/logo/logo.png", link=None)
+    st.logo("_pages/images/logo/logo.png", link=None)
 
     # Pages
     home = st.Page(
@@ -68,8 +62,6 @@ def main():
 
     pg = st.navigation(pages=pages)
     pg.run()
-
-    # Your Streamlit app code here
 
 
 if __name__ == "__main__":
