@@ -3,7 +3,7 @@ import streamlit as st
 
 def main():
     # TODO: make the home link not hard coded
-    st.logo("_pages/images/logo/logo.png", link=None)
+    st.logo("spinoff_blog/root/images/logo/logo.png", link=None)
 
     # Pages
     home = st.Page(
