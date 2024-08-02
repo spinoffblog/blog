@@ -1,6 +1,7 @@
 import os
 import streamlit as st
 import pandas as pd
+import json
 
 
 # Function to create a link to the details page
@@ -21,12 +22,45 @@ def streamlit_page():
 
 st.title("Real Estate Records")
 
-# Create a sample DataFrame (you would typically load this from a database or API)
-data = {
-    "address": ["16 Grant St", "18 Grant St", "2 Ozone Parade"],
-    "id": [12607, 12608, 12609],
-}
-df = pd.DataFrame(data)
+# Load the JSON file
+with open("spinoff_blog/real_estate/property_list/data.json", "r") as file:
+    data = json.load(file)
+
+# Extract the 'single_family' array
+single_family = data["single_family"]
+
+# Create a DataFrame
+df = pd.json_normalize(
+    single_family,
+    record_path=None,
+    meta=[
+        ["properties", "description"],
+        ["properties", "id"],
+        ["properties", "slug"],
+        ["geometry", "type"],
+        ["geometry", "coordinates"],
+    ],
+)
+
+# Rename columns for clarity
+df = df.rename(
+    columns={
+        "properties.description": "description",
+        "properties.id": "id",
+        "properties.slug": "slug",
+        "geometry.type": "geometry_type",
+        "geometry.coordinates": "coordinates",
+    }
+)
+
+# Split coordinates into separate latitude and longitude columns
+df[["longitude", "latitude"]] = pd.DataFrame(df["coordinates"].tolist(), index=df.index)
+
+# Drop the original coordinates column
+df = df.drop("coordinates", axis=1)
+
+# Optional: Save the DataFrame to a CSV file
+# df.to_csv('single_family_data.csv', index=False)
 
 # Add a column with clickable links
 df["Details"] = df.apply(lambda row: make_clickable(row["id"]), axis=1)

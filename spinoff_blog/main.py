@@ -12,9 +12,6 @@ env = os.getenv("STREAMLIT_ENV", "development")
 # Load the appropriate .env file
 load_dotenv(f".env.{env}")
 
-# Rest of your main.py code...
-
-
 def run():
     # Set up argument parser
     parser = argparse.ArgumentParser(description="Run Spinoff Blog Streamlit app")

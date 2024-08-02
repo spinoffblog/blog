@@ -1,17 +1,21 @@
-# from spinoff_blog.real_estate.property_details.property_details import (
-#     run as run_property_details,
-# )
 import streamlit as st
-from spinoff_blog.real_estate.property_list.property_list import (
-    streamlit_page as property_list_page,
-)
-from spinoff_blog.real_estate.property_details.property_details import (
-    streamlit_page as property_details_page,
-)
+import os
+from dotenv import load_dotenv
 
 
-def run():
-    property_list = property_list_page()
-    property_details = property_details_page()
+# Determine the environment
+env = os.getenv("STREAMLIT_ENV", "development")
+
+# Load the appropriate .env file
+load_dotenv(f".env.{env}")
+
+
+def main():
+    property_list = st.Page("./property_list/property_list.py")
+    property_details = st.Page("./property_details/property_details.py")
     pg = st.navigation(pages=[property_list, property_details])
     pg.run()
+
+
+if __name__ == "__main__":
+    main()
