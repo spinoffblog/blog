@@ -1,14 +1,16 @@
 import streamlit as st
 import argparse
 import sys
-from real_estate import run_main as run_subdomain_main
+from spinoff_blog.real_estate.real_estate_main import run as run_real_estate_main
 
 
 def run():
     # Set up argument parser
     parser = argparse.ArgumentParser(description="Run Spinoff Blog Streamlit app")
     parser.add_argument(
-        "domain", choices=["main", "real_estate"], help="Choose domain: main or real_estate"
+        "domain",
+        choices=["main", "real_estate"],
+        help="Choose domain: main or real_estate",
     )
 
     # Check if running with `streamlit run`
@@ -24,7 +26,7 @@ def run():
         with st.sidebar:
             st.title("Main Domain")
     elif args.domain == "real_estate":  # real_estate
-        run_subdomain_main()
+        run_real_estate_main()
     else:
         # exit if domain is not valid
         print("Invalid domain")
