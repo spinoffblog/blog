@@ -1,0 +1,27 @@
+# Blog post meta information
+title: "Serve meta / Open Graph tags with Streamlit (like on this page)"
+description: ""
+author: ""
+date: ""
+
+# Open Graph meta tags
+og:
+  title: "Serve meta / Open Graph tags with Streamlit (like on this page)"
+  description: ""
+  type: ""
+  url: "https://spinoff.blog/serve-meta-open-graph-tags-with-streamlit-20240712"
+  image: "https://spinoff.blog/media/images/serve-meta-open-graph-tags-with-streamlit-20240712.jpg"
+  site_name: "The Spinoff Blog"
+
+# Twitter Card meta tags
+twitter:
+  card: ""
+  site: ""
+  creator: ""
+
+# Additional meta tags
+keywords:
+  - 
+  - 
+  - 
+  -

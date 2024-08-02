@@ -1,8 +1,7 @@
-import streamlit as st
 import argparse
 import sys
-from spinoff_blog.real_estate.real_estate_main import run as run_real_estate_main
-from spinoff_blog.root.root_main import run as run_root_main
+from spinoff_blog.real_estate.main import run as run_real_estate_main
+from spinoff_blog.root.main import run as run_root_main
 import os
 from dotenv import load_dotenv
 
@@ -21,8 +20,8 @@ def run():
     parser = argparse.ArgumentParser(description="Run Spinoff Blog Streamlit app")
     parser.add_argument(
         "domain",
-        choices=["main", "real_estate"],
-        help="Choose domain: main or real_estate",
+        choices=["root", "real_estate"],
+        help="Choose domain: root or real_estate",
     )
 
     # Check if running with `streamlit run`
@@ -32,7 +31,7 @@ def run():
 
     args = parser.parse_args()
 
-    if args.domain == "main":
+    if args.domain == "root":
         run_root_main()
     elif args.domain == "real_estate":  # real_estate
         run_real_estate_main()
