@@ -10,7 +10,6 @@ def make_clickable(id):
 
 def streamlit_page():
     filepath = os.path.abspath(__file__)
-    print(filepath)
     return st.Page(
         filepath,
         title="Property List",
@@ -18,6 +17,7 @@ def streamlit_page():
         url_path=None,
         default=True,
     )
+
 
 st.title("Real Estate Records")
 

@@ -53,7 +53,6 @@ def format_date(date_str):
 
 def streamlit_page():
     filepath = os.path.abspath(__file__)
-    print(filepath)
     return st.Page(
         filepath,
         title="Property Details",
