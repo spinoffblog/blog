@@ -2,6 +2,7 @@ import streamlit as st
 import argparse
 import sys
 from spinoff_blog.real_estate.real_estate_main import run as run_real_estate_main
+from spinoff_blog.root.root_main import run as run_root_main
 import os
 from dotenv import load_dotenv
 
@@ -32,8 +33,7 @@ def run():
     args = parser.parse_args()
 
     if args.domain == "main":
-        with st.sidebar:
-            st.title("Main Domain")
+        run_root_main()
     elif args.domain == "real_estate":  # real_estate
         run_real_estate_main()
     else:

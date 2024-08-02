@@ -29,7 +29,7 @@ def fetch_record(id):
 @st.cache_data
 def fetch_comparison_land_sales(suburb):
     response = requests.get(
-        f"{API_URL  }suburb-latest-landsalerecord/sales-by-suburb/?suburb={suburb}"
+        f"{API_URL}suburb-latest-landsalerecord/sales-by-suburb/?suburb={suburb}"
     )
     if response.status_code == 200:
         # add dollars_per_m2 to response
