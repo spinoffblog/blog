@@ -55,7 +55,15 @@ def main():
     # Sidebar
     pages = {
         "": [home, categories],
-        "Posts": [_2024_07_18],
+        "Posts": [
+            _2024_07_18,
+            _2024_07_16,
+            _2024_07_13,
+            _2024_07_12,
+            _2024_07_08,
+            _2024_07_05,
+            _2024_07_04,
+        ],
     }
 
     pg = st.navigation(pages=pages)
