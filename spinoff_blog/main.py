@@ -2,6 +2,17 @@ import streamlit as st
 import argparse
 import sys
 from spinoff_blog.real_estate.real_estate_main import run as run_real_estate_main
+import os
+from dotenv import load_dotenv
+
+
+# Determine the environment
+env = os.getenv("STREAMLIT_ENV", "development")
+
+# Load the appropriate .env file
+load_dotenv(f".env.{env}")
+
+# Rest of your main.py code...
 
 
 def run():
@@ -19,8 +30,6 @@ def run():
         sys.argv = sys.argv[2:]
 
     args = parser.parse_args()
-
-    st.set_page_config(page_title="Spinoff Blog", layout="wide")
 
     if args.domain == "main":
         with st.sidebar:

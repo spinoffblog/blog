@@ -1,11 +1,23 @@
+import os
 import streamlit as st
 import pandas as pd
 
 
 # Function to create a link to the details page
 def make_clickable(id):
-    return f'<a href="/details?id={id}" target="_self">View Details</a>'
+    return f'<a href="/property_details?id={id}" target="_self">View Details</a>'
 
+
+def streamlit_page():
+    filepath = os.path.abspath(__file__)
+    print(filepath)
+    return st.Page(
+        filepath,
+        title="Property List",
+        icon="🏠",
+        url_path=None,
+        default=True,
+    )
 
 st.title("Real Estate Records")
 
