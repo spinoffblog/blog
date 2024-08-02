@@ -1,28 +1,17 @@
 import streamlit as st
-import sys
 import requests
 from datetime import datetime
-from pathlib import Path
 
-# Add the shared directory to the Python path
-# TODO: make the project a proper Python project and use relative imports
-shared_dir = Path(__file__).parent.parent.parent.parent / "shared"
-sys.path.append(str(shared_dir))
-
-# Now we can import the land_record_component
-from land_record_details_panel import land_record_details_panel  # noqa
-from land_sales_panel import land_sales_panel  # noqa
-from land_sales_suburb_sale_curve_panel import (
-    land_sales_suburb_sale_curve_panel,
-)  # noqa
-from land_sales_suburb_house_and_land_per_m2_curve_panel import (
+from spinoff_blog.real_estate.shared import (
+    land_record_details_panel,
+    land_record_financials_panel,
+    land_record_zoning_panel,
+    land_sales_panel,
     land_sales_suburb_house_and_land_per_m2_curve_panel,
-)  # noqa
-from land_sales_suburb_scatter_plot_panel import (
+    land_sales_suburb_sale_curve_panel,
     land_sales_suburb_scatter_plot_panel,
-)  # noqa
-from land_record_zoning_panel import land_record_zoning_panel  # noqa
-from land_record_financials_panel import land_record_financials_panel  # noqa
+)
+
 
 # TODO: make this ENV or similar
 HOST = "http://localhost"
@@ -78,32 +67,19 @@ def run():
         record = fetch_record(id)
         comparison_sales = fetch_comparison_land_sales(record["city"])
         if record:
-            land_record_details_panel(record)
-            land_sales_panel(record)
-            land_record_financials_panel(record)
-            land_sales_suburb_sale_curve_panel(record, comparison_sales)
-            land_sales_suburb_house_and_land_per_m2_curve_panel(
+            land_record_details_panel.land_record_details_panel(record)
+            land_sales_panel.land_sales_panel(record)
+            land_record_financials_panel.land_record_financials_panel(record)
+            land_sales_suburb_sale_curve_panel.land_sales_suburb_sale_curve_panel(
                 record, comparison_sales
             )
-            land_sales_suburb_scatter_plot_panel(record, comparison_sales)
-            land_record_zoning_panel(record)
-
-            # Display zoning information
-            # if record["zoning"]:
-            #     zoning = record["zoning"][0]  # Assuming there's only one zoning record
-            #     st.write(f"Zoning: {zoning['r_code']}")
-            #     st.write(
-            #         f"Scheme: {zoning['scheme_name']} (Number: {zoning['scheme_number']})"
-            #     )
-
-            # # Display land sale records
-            # st.write("## Land Sale History")
-            # for sale in record["land_sale_records"]:
-            #     st.write(f"{format_date(sale['date'])}: {format_currency(sale['amount'])}")
-
-            # # Display the full JSON data
-            # with st.expander("View Full Record Data"):
-            #     st.json(record)
+            land_sales_suburb_house_and_land_per_m2_curve_panel.land_sales_suburb_house_and_land_per_m2_curve_panel(
+                record, comparison_sales
+            )
+            land_sales_suburb_scatter_plot_panel.land_sales_suburb_scatter_plot_panel(
+                record, comparison_sales
+            )
+            land_record_zoning_panel.land_record_zoning_panel(record)
     else:
         st.write(
             "No property ID provided. Please select a property from the main page."

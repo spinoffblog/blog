@@ -49,6 +49,7 @@ Pygments==2.18.0
 pyparsing==3.1.2
 python-dateutil==2.9.0.post0
 python-decouple==3.8
+python-dotenv==1.0.1
 pytz==2024.1
 PyYAML==6.0.1
 referencing==0.35.1
@@ -62,6 +63,7 @@ shapely==2.0.5
 six==1.16.0
 smmap==5.0.1
 soupsieve==2.5
+-e git+https://github.com/spinoffblog/blog.git@50f26cc5850ce6a12bfaf7ceee444a52d5ec9e6b#egg=spinoff_blog
 streamlit==1.36.0
 streamlit-aggrid==1.0.5
 streamlit_carousel==1.1.0
