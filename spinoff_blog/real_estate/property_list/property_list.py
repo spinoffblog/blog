@@ -28,53 +28,10 @@ st.title("Real Estate Records")
 
 address = st_keyup("Search by address or ZIP code:")
 results = fuzzy_match_address(address, properties, score_cutoff=80, limit=5)
+print(results)
 
-# write out the results as a list, adding an ahref link to the details page
 for result in results:
     st.write(
         f"{make_clickable(result[0]['id'], result[0]['formatted_address'])}",
         unsafe_allow_html=True,
     )
-
-# Extract the 'single_family' array
-# single_family = data["single_family"]
-
-# # Create a DataFrame
-# df = pd.json_normalize(
-#     single_family,
-#     record_path=None,
-#     meta=[
-#         ["properties", "description"],
-#         ["properties", "id"],
-#         ["properties", "slug"],
-#         ["geometry", "type"],
-#         ["geometry", "coordinates"],
-#     ],
-# )
-
-# # Rename columns for clarity
-# df = df.rename(
-#     columns={
-#         "properties.description": "description",
-#         "properties.id": "id",
-#         "properties.slug": "slug",
-#         "geometry.type": "geometry_type",
-#         "geometry.coordinates": "coordinates",
-#     }
-# )
-
-# # Split coordinates into separate latitude and longitude columns
-# df[["longitude", "latitude"]] = pd.DataFrame(df["coordinates"].tolist(), index=df.index)
-
-# # Drop the original coordinates column
-# df = df.drop("coordinates", axis=1)
-
-# # Optional: Save the DataFrame to a CSV file
-# # df.to_csv('single_family_data.csv', index=False)
-
-# # Add a column with clickable links
-# df["Details"] = df.apply(lambda row: make_clickable(row["id"]), axis=1)
-
-# # Display the DataFrame
-# st.write("Click on 'View Details' to see more information:")
-# st.write(df.to_html(escape=False, index=False), unsafe_allow_html=True)
