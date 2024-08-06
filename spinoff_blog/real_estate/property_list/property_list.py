@@ -1,12 +1,11 @@
 import os
 import streamlit as st
 from spinoff_blog.shared.helpers import get_properties, fuzzy_match_address
-from thefuzz import process
 
 
 # Function to create a link to the details page
-def make_clickable(id):
-    return f'<a href="/property_details?id={id}" target="_self">View Details</a>'
+def make_clickable(id, address):
+    return f'<a href="/property_details?id={id}" target="_self">{address}</a>'
 
 
 def streamlit_page():
@@ -31,9 +30,8 @@ results = fuzzy_match_address(address, properties, score_cutoff=80, limit=5)
 
 # write out the results as a list, adding an ahref link to the details page
 for result in results:
-    print(result[0]["formatted_address"])
     st.write(
-        f"{result[0]['formatted_address']} -, {make_clickable(result[0]['id'])}",
+        f"{make_clickable(result[0]['id'], result[0]['formatted_address'])}",
         unsafe_allow_html=True,
     )
 
