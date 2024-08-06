@@ -40,12 +40,17 @@ def land_sales_suburb_scatter_plot_panel(subject_property, other_sales):
             name=f"{subject_address}",
             hoverinfo="text",
             hovertext=f"{subject_address}<br>${subject_price:,}<br>{subject_date}",
+            zorder=50000,
         )
     )
 
     fig_scatter.update_layout(
         xaxis_title="Sale Date", yaxis_title="Sale Price ($)", yaxis_tickformat="$,.0f"
     )
+
+    print(fig_scatter)
+
+    fig_scatter.data = (fig_scatter.data[1], fig_scatter.data[0])
 
     # Display the scatter plot in Streamlit
     st.plotly_chart(fig_scatter)
