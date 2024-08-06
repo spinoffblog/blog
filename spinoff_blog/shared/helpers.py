@@ -2,7 +2,7 @@ import streamlit as st
 import json
 import os
 import requests
-
+import inflect
 
 API_URL = os.getenv("API_URL")
 USE_LOCAL_DATA = os.getenv("USE_LOCAL_DATA", "false")
@@ -60,3 +60,13 @@ def load_local_comparison_land_sales():
     with open("spinoff_blog/data/comparison_land_sales.json", "r") as file:
         data = json.load(file)
     return data
+
+
+## Formatting
+
+# Create a global inflect engine instance
+p = inflect.engine()
+
+
+def ordinalize_number(number):
+    return p.ordinal(number)

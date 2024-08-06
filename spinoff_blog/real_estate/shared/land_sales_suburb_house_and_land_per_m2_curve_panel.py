@@ -3,6 +3,8 @@ import plotly.graph_objects as go
 import plotly.express as px
 import pandas as pd
 
+from spinoff_blog.shared.helpers import ordinalize_number
+
 
 def land_sales_suburb_house_and_land_per_m2_curve_panel(subject_property, other_sales):
     # Extract the last sale price of the subject property
@@ -89,8 +91,9 @@ def land_sales_suburb_house_and_land_per_m2_curve_panel(subject_property, other_
     # Display subject property's position in the price curve
     if subject_row is not None:
         st.write(f"Subject Property Position:")
+
         st.write(
-            f"Rank: {len(df) + 1 - subject_row['rank']}th most expensive out of {len(df) + 1} sales"
+            f"Rank: {ordinalize_number(len(df) + 1 - subject_row['rank'])} most expensive out of {len(df) + 1} sales"
         )
         st.write(f"Percentile: {subject_row['percentile']:.2f}%")
     else:

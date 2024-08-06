@@ -2,6 +2,7 @@ import streamlit as st
 import plotly.graph_objects as go
 import plotly.express as px
 import pandas as pd
+from spinoff_blog.shared.helpers import ordinalize_number
 
 
 def land_sales_suburb_sale_curve_panel(subject_property, other_sales):
@@ -12,7 +13,6 @@ def land_sales_suburb_sale_curve_panel(subject_property, other_sales):
         return
     last_sale = max(subject_property_sales, key=lambda x: x["date"])
     subject_price = last_sale["amount"]
-    subject_date = last_sale["date"]
     subject_address = f"{subject_property['house_number']} {subject_property['road']}"
 
     # Convert other sales to DataFrame
@@ -90,7 +90,7 @@ def land_sales_suburb_sale_curve_panel(subject_property, other_sales):
     if subject_row is not None:
         st.write(f"Subject Property Position:")
         st.write(
-            f"Rank: {len(df) + 1 - subject_row['rank']}th most expensive out of {len(df) + 1} sales"
+            f"Rank: {ordinalize_number(len(df) + 1 - subject_row['rank'])} most expensive out of {len(df) + 1} sales"
         )
         st.write(f"Percentile: {subject_row['percentile']:.2f}%")
     else:
