@@ -54,6 +54,7 @@ python-decouple==3.8
 python-dotenv==1.0.1
 pytz==2024.1
 PyYAML==6.0.1
+rapidfuzz==3.9.5
 referencing==0.35.1
 requests==2.32.3
 rich==13.7.1
@@ -65,13 +66,14 @@ shapely==2.0.5
 six==1.16.0
 smmap==5.0.1
 soupsieve==2.5
--e git+https://github.com/spinoffblog/blog.git@7d4591f913107e7c4cf2615ef945d3600554fb3f#egg=spinoff_blog
+-e git+https://github.com/spinoffblog/blog.git@f1b75d80a099d24baac27bd158320c8aa988124a#egg=spinoff_blog
 streamlit==1.36.0
 streamlit-aggrid==1.0.5
-streamlit-searchbox==0.1.14
+streamlit-keyup==0.2.4
 streamlit_carousel==1.1.0
 streamlit_folium==0.22.0
 tenacity==8.4.2
+thefuzz==0.22.1
 toml==0.10.2
 toolz==0.12.1
 tornado==6.4.1

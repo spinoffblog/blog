@@ -1,5 +1,6 @@
 import os
 import streamlit as st
+from st_keyup import st_keyup
 from spinoff_blog.shared.helpers import get_properties, fuzzy_match_address
 
 
@@ -25,7 +26,7 @@ properties = get_properties()
 
 st.title("Real Estate Records")
 
-address = st.text_input("Search by address or ZIP code:")
+address = st_keyup("Search by address or ZIP code:")
 results = fuzzy_match_address(address, properties, score_cutoff=80, limit=5)
 
 # write out the results as a list, adding an ahref link to the details page
