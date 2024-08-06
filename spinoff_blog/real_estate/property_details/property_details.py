@@ -15,6 +15,7 @@ from spinoff_blog.real_estate.shared import (
 from spinoff_blog.shared.helpers import (
     get_property,
     get_comparison_land_sales,
+    get_financial_data,
 )
 
 
@@ -49,10 +50,13 @@ id = st.query_params.get("id")
 if id:
     record = get_property(id)
     comparison_sales = get_comparison_land_sales(record["city"])
+    financial_stats = get_financial_data(id)
     if record:
         land_record_details_panel.land_record_details_panel(record)
         land_sales_panel.land_sales_panel(record)
-        land_record_financials_panel.land_record_financials_panel(record)
+        land_record_financials_panel.land_record_financials_panel(
+            record, financial_stats
+        )
         land_sales_suburb_sale_curve_panel.land_sales_suburb_sale_curve_panel(
             record, comparison_sales
         )

@@ -31,6 +31,15 @@ def get_comparison_land_sales(suburb):
         return fetch_comparison_land_sales(suburb)
 
 
+def get_financial_data(id):
+    response = requests.get(f"{API_URL}property-stats/{id}/financial_stats/")
+    if response.status_code == 200:
+        return response.json()
+    else:
+        st.error(f"Failed to fetch financial data for ID {id}")
+        return None
+
+
 @st.cache_data
 def fetch_comparison_land_sales(suburb):
     response = requests.get(
