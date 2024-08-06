@@ -26,6 +26,7 @@ properties = get_properties()
 
 st.title("Real Estate Records")
 
+
 address = st_keyup("Search by address:", placeholder="165 Broome St")
 results = fuzzy_match_address(address, properties, score_cutoff=80, limit=5)
 print(results)

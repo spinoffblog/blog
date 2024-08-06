@@ -2,7 +2,6 @@ import streamlit as st
 
 
 def land_record_details_panel(record):
-    st.write(f"## {record['house_number']} {record['road'].title()}")
     # st.write(f"### {record['city'].title()}, {record['state']}")
     # TODO: make zoning safe
     text_with_icons = f"""

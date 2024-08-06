@@ -53,22 +53,27 @@ if id:
     comparison_sales = get_comparison_land_sales(record["city"])
     financial_stats = get_financial_data(id)
     record_obj = LandRecord(record)
+    st.write(f"## {record['house_number']} {record['road'].title()}")
     if record:
-        land_record_details_panel.land_record_details_panel(record)
-        land_sales_panel.land_sales_panel(record)
-        land_record_financials_panel.land_record_financials_panel(
-            record_obj, financial_stats
-        )
-        land_sales_suburb_sale_curve_panel.land_sales_suburb_sale_curve_panel(
-            record, comparison_sales
-        )
-        land_sales_suburb_house_and_land_per_m2_curve_panel.land_sales_suburb_house_and_land_per_m2_curve_panel(
-            record, comparison_sales
-        )
-        land_sales_suburb_scatter_plot_panel.land_sales_suburb_scatter_plot_panel(
-            record, comparison_sales
-        )
-        land_record_zoning_panel.land_record_zoning_panel(record)
+        snapshot_tab, charts_tab, zoning_tab = st.tabs(["Snapshot", "Charts", "Zoning"])
+        with snapshot_tab:
+            land_record_details_panel.land_record_details_panel(record)
+            land_sales_panel.land_sales_panel(record)
+            land_record_financials_panel.land_record_financials_panel(
+                record_obj, financial_stats
+            )
+        with charts_tab:
+            land_sales_suburb_sale_curve_panel.land_sales_suburb_sale_curve_panel(
+                record, comparison_sales
+            )
+            land_sales_suburb_house_and_land_per_m2_curve_panel.land_sales_suburb_house_and_land_per_m2_curve_panel(
+                record, comparison_sales
+            )
+            land_sales_suburb_scatter_plot_panel.land_sales_suburb_scatter_plot_panel(
+                record, comparison_sales
+            )
+        with zoning_tab:
+            land_record_zoning_panel.land_record_zoning_panel(record)
 else:
     st.write("No property ID provided. Please select a property from the main page.")
 
