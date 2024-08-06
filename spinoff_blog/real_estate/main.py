@@ -7,7 +7,8 @@ from dotenv import load_dotenv
 env = os.getenv("STREAMLIT_ENV", "development")
 
 # Load the appropriate .env file
-load_dotenv(f".env.{env}")
+file = f".env.{env}"
+load_dotenv(file)
 
 
 def main():

@@ -3,6 +3,8 @@ import streamlit as st
 import pandas as pd
 import json
 
+from spinoff_blog.shared.helpers import get_properties
+
 
 # Function to create a link to the details page
 def make_clickable(id):
@@ -22,9 +24,8 @@ def streamlit_page():
 
 st.title("Real Estate Records")
 
-# Load the JSON file
-with open("spinoff_blog/real_estate/property_list/data.json", "r") as file:
-    data = json.load(file)
+data = get_properties()
+
 
 # Extract the 'single_family' array
 single_family = data["single_family"]
