@@ -3,6 +3,7 @@ import json
 import os
 import requests
 import inflect
+from thefuzz import process
 
 API_URL = os.getenv("API_URL")
 USE_LOCAL_DATA = os.getenv("USE_LOCAL_DATA", "false")
@@ -59,7 +60,7 @@ def fetch_comparison_land_sales(suburb):
 
 def load_local_properties():
     # Load the JSON file
-    with open("spinoff_blog/data/properties.json", "r") as file:
+    with open("spinoff_blog/data/simple-addresses.json", "r") as file:
         data = json.load(file)
     return data
 
@@ -69,6 +70,28 @@ def load_local_comparison_land_sales():
     with open("spinoff_blog/data/comparison_land_sales.json", "r") as file:
         data = json.load(file)
     return data
+
+
+def fuzzy_match_address(query, properties, score_cutoff=80, limit=None):
+    # Extract just the names for initial matching
+    addresses = [item["formatted_address"] for item in properties]
+
+    # Perform fuzzy matching
+    matches = process.extractBests(
+        query, addresses, score_cutoff=score_cutoff, limit=limit
+    )
+
+    # If we have matches, find the corresponding full records
+    results = []
+    for match in matches:
+        matched_name, score = match
+        # Find the original dict that contains this name
+        original_record = next(
+            item for item in properties if item["formatted_address"] == matched_name
+        )
+        results.append((original_record, score))
+
+    return results
 
 
 ## Formatting
