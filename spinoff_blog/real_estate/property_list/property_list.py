@@ -29,13 +29,13 @@ st.title("Real Estate Records")
 address = st.text_input("Search by address or ZIP code:")
 results = fuzzy_match_address(address, properties, score_cutoff=80, limit=5)
 
-print(results[0])
-
 # write out the results as a list, adding an ahref link to the details page
 for result in results:
-    pass
-    # print(result)
-    # st.write(f"{result['formatted_address']} -, {make_clickable(result[0])}", unsafe_allow_html=True)
+    print(result[0]["formatted_address"])
+    st.write(
+        f"{result[0]['formatted_address']} -, {make_clickable(result[0]['id'])}",
+        unsafe_allow_html=True,
+    )
 
 # Extract the 'single_family' array
 # single_family = data["single_family"]
