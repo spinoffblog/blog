@@ -11,6 +11,7 @@ from spinoff_blog.real_estate.shared import (
     land_sales_suburb_sale_curve_panel,
     land_sales_suburb_scatter_plot_panel,
 )
+from spinoff_blog.real_estate.shared.land_record import LandRecord
 
 from spinoff_blog.shared.helpers import (
     get_property,
@@ -51,11 +52,12 @@ if id:
     record = get_property(id)
     comparison_sales = get_comparison_land_sales(record["city"])
     financial_stats = get_financial_data(id)
+    record_obj = LandRecord(record)
     if record:
         land_record_details_panel.land_record_details_panel(record)
         land_sales_panel.land_sales_panel(record)
         land_record_financials_panel.land_record_financials_panel(
-            record, financial_stats
+            record_obj, financial_stats
         )
         land_sales_suburb_sale_curve_panel.land_sales_suburb_sale_curve_panel(
             record, comparison_sales

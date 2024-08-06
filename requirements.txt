@@ -65,9 +65,10 @@ shapely==2.0.5
 six==1.16.0
 smmap==5.0.1
 soupsieve==2.5
--e git+https://github.com/spinoffblog/blog.git@e67ae94a3f5b5d92d1259a08bbab971ac388d0c7#egg=spinoff_blog
+-e git+https://github.com/spinoffblog/blog.git@7d4591f913107e7c4cf2615ef945d3600554fb3f#egg=spinoff_blog
 streamlit==1.36.0
 streamlit-aggrid==1.0.5
+streamlit-searchbox==0.1.14
 streamlit_carousel==1.1.0
 streamlit_folium==0.22.0
 tenacity==8.4.2
