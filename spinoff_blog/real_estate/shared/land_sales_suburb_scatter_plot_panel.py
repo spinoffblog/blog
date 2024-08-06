@@ -37,9 +37,9 @@ def land_sales_suburb_scatter_plot_panel(subject_property, other_sales):
             y=[subject_price],
             mode="markers",
             marker=dict(color="red", size=10),
-            name="Subject Property",
+            name=f"{subject_address}",
             hoverinfo="text",
-            hovertext=f"Subject Property<br>{subject_address}<br>${subject_price:,}<br>{subject_date}",
+            hovertext=f"{subject_address}<br>${subject_price:,}<br>{subject_date}",
         )
     )
 

@@ -1,7 +1,7 @@
 import streamlit as st
 import pandas as pd
 
-# import plotly.express as px
+from spinoff_blog.shared.helpers import format_currency
 
 
 def land_sales_panel(json_data):
@@ -15,11 +15,17 @@ def land_sales_panel(json_data):
     # Convert to DataFrame
     df = pd.DataFrame(land_sales)
 
+    # Format the amount column as currency
+    df["amount"] = df["amount"].apply(format_currency)
+
     # Convert date strings to datetime objects
     df["date"] = pd.to_datetime(df["date"])
 
     # Sort by date
     df = df.sort_values("date")
+
+    # Make date dd/mm/yyyy
+    df["date"] = df["date"].dt.strftime("%d/%m/%Y")
 
     # make a copy of df with only amount and date
     for_table = df[["amount", "date"]].copy()

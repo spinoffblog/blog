@@ -20,10 +20,6 @@ from spinoff_blog.shared.helpers import (
 )
 
 
-def format_currency(amount):
-    return f"${amount:,}"
-
-
 def format_date(date_str):
     return datetime.strptime(date_str, "%Y-%m-%d").strftime("%B %d, %Y")
 
@@ -63,13 +59,13 @@ if id:
                 record_obj, financial_stats
             )
         with charts_tab:
+            land_sales_suburb_scatter_plot_panel.land_sales_suburb_scatter_plot_panel(
+                record, comparison_sales
+            )
             land_sales_suburb_sale_curve_panel.land_sales_suburb_sale_curve_panel(
                 record, comparison_sales
             )
             land_sales_suburb_house_and_land_per_m2_curve_panel.land_sales_suburb_house_and_land_per_m2_curve_panel(
-                record, comparison_sales
-            )
-            land_sales_suburb_scatter_plot_panel.land_sales_suburb_scatter_plot_panel(
                 record, comparison_sales
             )
         with zoning_tab:

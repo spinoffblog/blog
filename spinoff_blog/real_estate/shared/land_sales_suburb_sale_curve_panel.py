@@ -65,7 +65,7 @@ def land_sales_suburb_sale_curve_panel(subject_property, other_sales):
                 go.Bar(
                     x=[subject_data["rank"].iloc[0]],
                     y=[subject_data["amount"].iloc[0]],
-                    name="Subject Property",
+                    name=f"{subject_address}",
                     marker_color="red",
                 )
             )

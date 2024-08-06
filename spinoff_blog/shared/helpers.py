@@ -8,6 +8,15 @@ from thefuzz import process
 API_URL = os.getenv("API_URL")
 USE_LOCAL_DATA = os.getenv("USE_LOCAL_DATA", "false")
 
+USER_CURRENCY = "AUD"
+
+CURRENCIES = {
+    "AUD": {"symbol": "$", "name": "Australian Dollar", "code": "AUD", "rate": 1}
+}
+
+# For ordinalizing numbers
+p = inflect.engine()
+
 
 def get_properties():
     if USE_LOCAL_DATA:
@@ -96,9 +105,11 @@ def fuzzy_match_address(query, properties, score_cutoff=80, limit=None):
 
 ## Formatting
 
-# Create a global inflect engine instance
-p = inflect.engine()
-
 
 def ordinalize_number(number):
     return p.ordinal(number)
+
+
+def format_currency(amount):
+    in_user_currency = amount * CURRENCIES[USER_CURRENCY]["rate"]
+    return f"{CURRENCIES[USER_CURRENCY]['code']} {in_user_currency:,.0f}"
