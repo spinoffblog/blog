@@ -11,15 +11,16 @@ def land_sales_suburb_sale_curve_panel(subject_property, other_sales):
     if not subject_property_sales:
         st.error("No sales data available for the subject property.")
         return
+
     last_sale = max(subject_property_sales, key=lambda x: x["date"])
     subject_price = last_sale["amount"]
     subject_address = f"{subject_property['house_number']} {subject_property['road']}"
+    # subject_dollars_per_m2 = subject_price / subject_property["land_area"]
 
     # Convert other sales to DataFrame
     df = pd.DataFrame(other_sales)
     df["date"] = pd.to_datetime(df["date"])
     df["address"] = df["house_number"] + " " + df["road"]
-    df["is_subject"] = False  # Explicitly set is_subject to False for all other sales
 
     def create_price_curve_chart(df, subject_price, subject_address):
         # Create a DataFrame for the subject property
@@ -27,20 +28,13 @@ def land_sales_suburb_sale_curve_panel(subject_property, other_sales):
             {
                 "amount": [subject_price],
                 "address": [subject_address],
-                "is_subject": [True],
             }
         )
 
         # Combine all sales including the subject property
         all_sales = pd.concat([df, subject_df], ignore_index=True)
-
-        # Sort by price
         all_sales = all_sales.sort_values("amount")
-
-        # Add rank column
         all_sales["rank"] = range(1, len(all_sales) + 1)
-
-        # Calculate percentile
         all_sales["percentile"] = all_sales["rank"] / len(all_sales) * 100
 
         # Create the bar chart
@@ -52,43 +46,55 @@ def land_sales_suburb_sale_curve_panel(subject_property, other_sales):
             labels={
                 "address": "Address",
                 "rank": "Rank",
-                "amount": "Sale Price ($)",
+                "amount": "Price ($)",
                 "percentile": "Percentile",
             },
-            title="Sales price curve",
+            title="Price curve",
+            color_discrete_sequence=["#1E90FF"] * len(all_sales),
         )
 
-        # Highlight the subject property
-        subject_data = all_sales[all_sales["is_subject"] == True]
-        if not subject_data.empty:
-            fig.add_trace(
-                go.Bar(
-                    x=[subject_data["rank"].iloc[0]],
-                    y=[subject_data["amount"].iloc[0]],
-                    name=f"{subject_address}",
-                    marker_color="red",
-                )
-            )
+        # Find the subject property's position
+        subject_row = all_sales[all_sales["address"] == subject_address].iloc[0]
+        subject_rank = subject_row["rank"]
+        subject_price = subject_row["amount"]
+
+        # Add an arrow annotation for the subject property
+        fig.add_annotation(
+            x=subject_rank,
+            y=subject_price,
+            text=f"{subject_address}<br>Rank: {subject_rank}/{len(all_sales)}<br>Price: ${subject_price:,.0f}<br>Percentile: {subject_row['percentile']:.1f}%",
+            showarrow=True,
+            arrowhead=2,
+            arrowsize=1,
+            arrowwidth=2,
+            arrowcolor="red",
+            align="left",
+            xanchor="right",
+            yanchor="middle",
+            bgcolor="white",
+            bordercolor="red",
+            borderwidth=2,
+        )
+
+        # Highlight the subject property bar in red
+        fig.update_traces(
+            marker_color=[
+                "red" if r == subject_rank else "#1E90FF" for r in all_sales["rank"]
+            ]
+        )
 
         # Customize the layout
         fig.update_layout(
             xaxis_title="Properties (Ranked by Price)",
             yaxis_title="Sale Price ($)",
             yaxis_tickformat="$,.0f",
-            showlegend=True,
+            showlegend=False,  # Hide the legend as it's not needed
         )
 
-        return fig, subject_data.iloc[0] if not subject_data.empty else None
+        return fig, subject_row
 
     # Create and display the price curve chart
     price_curve_fig, subject_row = create_price_curve_chart(
         df, subject_price, subject_address
     )
     st.plotly_chart(price_curve_fig)
-
-    # Display subject property's position in the price curve
-    # if subject_row is not None:
-    #     st.write(
-    #         f"Rank: {ordinalize_number(len(df) + 1 - subject_row['rank'])} most expensive out of {len(df) + 1} sales"
-    #     )
-    #     st.write(f"Percentile: {subject_row['percentile']:.2f}%")

@@ -50,7 +50,7 @@ def land_sales_suburb_house_and_land_per_m2_curve_panel(subject_property, other_
                 "percentile": "Percentile",
             },
             title="Price per m² curve",
-            color_discrete_sequence=["lightblue"] * len(all_sales),
+            color_discrete_sequence=["#1E90FF"] * len(all_sales),
         )
 
         # Find the subject property's position
@@ -62,7 +62,7 @@ def land_sales_suburb_house_and_land_per_m2_curve_panel(subject_property, other_
         fig.add_annotation(
             x=subject_rank,
             y=subject_price_per_m2,
-            text=f"Subject Property<br>Rank: {subject_rank}/{len(all_sales)}<br>Price per m²: ${subject_price_per_m2:,.0f}<br>Percentile: {subject_row['percentile']:.1f}%",
+            text=f"{subject_address}<br>Rank: {subject_rank}/{len(all_sales)}<br>Price per m²: ${subject_price_per_m2:,.0f}<br>Percentile: {subject_row['percentile']:.1f}%",
             showarrow=True,
             arrowhead=2,
             arrowsize=1,
@@ -76,15 +76,11 @@ def land_sales_suburb_house_and_land_per_m2_curve_panel(subject_property, other_
             borderwidth=2,
         )
 
-        # Highlight the subject property bar
-        fig.add_trace(
-            go.Bar(
-                x=[subject_rank],
-                y=[subject_price_per_m2],
-                marker_color="red",
-                name="Subject Property",
-                showlegend=True,
-            )
+        # Highlight the subject property bar in red
+        fig.update_traces(
+            marker_color=[
+                "red" if r == subject_rank else "#1E90FF" for r in all_sales["rank"]
+            ]
         )
 
         # Customize the layout
@@ -92,7 +88,7 @@ def land_sales_suburb_house_and_land_per_m2_curve_panel(subject_property, other_
             xaxis_title="Properties (Ranked by Price per m²)",
             yaxis_title="Sale Price per m² ($)",
             yaxis_tickformat="$,.0f",
-            showlegend=True,
+            showlegend=False,  # Hide the legend as it's not needed
         )
 
         return fig, subject_row
@@ -102,8 +98,3 @@ def land_sales_suburb_house_and_land_per_m2_curve_panel(subject_property, other_
         df, subject_price, subject_address
     )
     st.plotly_chart(price_curve_fig)
-
-    # Display subject property's position in the price curve
-    st.write(f"Subject Property Position:")
-    st.write(f"Rank: {subject_row['rank']} out of {len(df) + 1} sales")
-    st.write(f"Percentile: {subject_row['percentile']:.2f}%")
