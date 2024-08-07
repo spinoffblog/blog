@@ -55,7 +55,7 @@ def land_sales_suburb_sale_curve_panel(subject_property, other_sales):
                 "amount": "Sale Price ($)",
                 "percentile": "Percentile",
             },
-            title="Price Curve: Neighborhood Sales",
+            title="Sales price curve",
         )
 
         # Highlight the subject property
@@ -87,11 +87,8 @@ def land_sales_suburb_sale_curve_panel(subject_property, other_sales):
     st.plotly_chart(price_curve_fig)
 
     # Display subject property's position in the price curve
-    if subject_row is not None:
-        st.write(f"Subject Property Position:")
-        st.write(
-            f"Rank: {ordinalize_number(len(df) + 1 - subject_row['rank'])} most expensive out of {len(df) + 1} sales"
-        )
-        st.write(f"Percentile: {subject_row['percentile']:.2f}%")
-    else:
-        st.write("Unable to determine subject property position.")
+    # if subject_row is not None:
+    #     st.write(
+    #         f"Rank: {ordinalize_number(len(df) + 1 - subject_row['rank'])} most expensive out of {len(df) + 1} sales"
+    #     )
+    #     st.write(f"Percentile: {subject_row['percentile']:.2f}%")
