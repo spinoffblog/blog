@@ -4,6 +4,8 @@ from spinoff_blog.real_estate.shared.land_record import LandRecord
 
 
 def land_record_financials_panel(record: LandRecord, financial_stats):
+    st.write(" ")
+    st.write(" ")
     st.write(f"##### Metrics")
 
     data = {
