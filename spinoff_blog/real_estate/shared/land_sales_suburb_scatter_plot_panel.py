@@ -32,7 +32,7 @@ def land_sales_suburb_scatter_plot_panel(subject_property, other_sales):
             y=alt.Y("amount:Q", title="Sale Price ($)", axis=alt.Axis(format="$,.0f")),
             tooltip=["address", "amount_formatted", "date"],
         )
-        .properties(title="Neighborhood Sales Over Time")
+        .properties(title=f"{subject_property["city"].title()} Sales Over Time")
     )
 
     # Add the subject property as a different colored point
@@ -61,5 +61,8 @@ def land_sales_suburb_scatter_plot_panel(subject_property, other_sales):
     # Combine the scatter plot and subject property point
     chart = scatter + subject_point
 
+
+    st.write(" ")
+    st.write(" ")
     # Display the chart in Streamlit
     st.altair_chart(chart, use_container_width=True)

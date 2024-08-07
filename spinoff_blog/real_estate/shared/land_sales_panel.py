@@ -28,7 +28,7 @@ def land_sales_panel(json_data):
     df["date"] = df["date"].dt.strftime("%d/%m/%Y")
 
     # make a copy of df with only amount and date
-    for_table = df[["amount", "date"]].copy()
+    for_table = df[["date", "amount"]].copy()
 
     st.write(" ")
     st.write(" ")

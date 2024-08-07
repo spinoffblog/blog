@@ -1,8 +1,6 @@
 import streamlit as st
-import plotly.graph_objects as go
 import plotly.express as px
 import pandas as pd
-from spinoff_blog.shared.helpers import ordinalize_number
 
 
 def land_sales_suburb_sale_curve_panel(subject_property, other_sales):
@@ -49,7 +47,7 @@ def land_sales_suburb_sale_curve_panel(subject_property, other_sales):
                 "amount": "Price ($)",
                 "percentile": "Percentile",
             },
-            title="Price curve",
+            title=f"{subject_property["city"].title()} price curve",
             color_discrete_sequence=["#1E90FF"] * len(all_sales),
         )
 

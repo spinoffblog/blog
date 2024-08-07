@@ -49,7 +49,7 @@ def land_sales_suburb_house_and_land_per_m2_curve_panel(subject_property, other_
                 "dollars_per_m2": "Price per m² ($)",
                 "percentile": "Percentile",
             },
-            title="Price per m² curve",
+            title=f"{subject_property["city"].title()} per m² curve",
             color_discrete_sequence=["#1E90FF"] * len(all_sales),
         )
 

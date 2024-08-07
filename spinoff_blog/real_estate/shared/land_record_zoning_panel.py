@@ -28,7 +28,7 @@ def land_record_zoning_panel(record):
         folium.Marker(
             [zone_center.y, zone_center.x],
             icon=folium.DivIcon(
-                html=f'<div style="font-size: 10pt; color: blue;">{zone["r_code"]}</div>'
+                html=f'<div style="font-size: 10pt; color: blue;"><strong>{zone["r_code"]}</strong></div>'
             ),
         ).add_to(m)
 
