@@ -46,6 +46,7 @@ id = st.query_params.get("id")
 
 if id:
     record = get_property(id)
+    # TODO: stop this from using local data
     comparison_sales = get_comparison_land_sales(record["city"])
     financial_stats = get_financial_data(id)
     record_obj = LandRecord(record)
