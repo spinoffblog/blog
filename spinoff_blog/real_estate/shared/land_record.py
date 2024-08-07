@@ -1,6 +1,7 @@
 from typing import List, Dict, Any
 from dataclasses import dataclass
 from datetime import datetime
+from spinoff_blog.shared.helpers import format_currency
 
 
 @dataclass
@@ -43,6 +44,9 @@ class LandRecord:
         self.land_type = data["land_type"]
         self.zoning = [Zoning(**zone) for zone in data["zoning"]]
 
+    def formatted_address(self) -> str:
+        return f"{self.house_number} {self.road}".title()
+
     def cost_per_m2(self) -> float:
         if not self.land_sale_records:
             return 0.0
@@ -51,9 +55,9 @@ class LandRecord:
             self.land_sale_records, key=lambda x: datetime.strptime(x.date, "%Y-%m-%d")
         )
         return most_recent_sale.amount / self.land_area if self.land_area else 0.0
-    
+
     def formatted_cost_per_m2(self) -> str:
-        return f"${self.cost_per_m2():,.0f}"
+        return format_currency(self.cost_per_m2())
 
 
 # Example usage:

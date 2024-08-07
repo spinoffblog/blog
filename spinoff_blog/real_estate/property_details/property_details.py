@@ -72,8 +72,3 @@ if id:
             land_record_zoning_panel.land_record_zoning_panel(record)
 else:
     st.write("No property ID provided. Please select a property from the main page.")
-
-# Add a button to return to the main page
-if st.button("Back to Main Page"):
-    st.query_params.clear()
-    st.rerun()

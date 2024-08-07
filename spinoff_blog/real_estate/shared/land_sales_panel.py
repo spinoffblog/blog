@@ -29,8 +29,10 @@ def land_sales_panel(json_data):
 
     # make a copy of df with only amount and date
     for_table = df[["amount", "date"]].copy()
+
+
     st.markdown("##### Sales history")
-    st.dataframe(for_table)
+    st.dataframe(for_table, hide_index=True)
 
     # Create the Plotly Express scatter plot with line
     #

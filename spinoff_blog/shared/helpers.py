@@ -112,4 +112,4 @@ def ordinalize_number(number):
 
 def format_currency(amount):
     in_user_currency = amount * CURRENCIES[USER_CURRENCY]["rate"]
-    return f"{CURRENCIES[USER_CURRENCY]['code']} {in_user_currency:,.0f}"
+    return f"{CURRENCIES[USER_CURRENCY]['symbol']}{in_user_currency:,.0f}"
