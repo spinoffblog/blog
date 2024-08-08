@@ -94,7 +94,7 @@ st.dataframe(styled_df, hide_index=True)
 
 # Check if df is a proper DataFrame
 if not isinstance(df, pd.DataFrame):
-    st.error(
+    st.warning(
         "Error: 'df' is not a pandas DataFrame. Please check your data loading process."
     )
     st.stop()
@@ -103,7 +103,7 @@ if not isinstance(df, pd.DataFrame):
 required_columns = ["sale_amount", "land_area", "dollars_per_m2"]
 missing_columns = [col for col in required_columns if col not in df.columns]
 if missing_columns:
-    st.error(
+    st.warning(
         f"Error: The following required columns are missing from the DataFrame: {', '.join(missing_columns)}"
     )
     st.stop()

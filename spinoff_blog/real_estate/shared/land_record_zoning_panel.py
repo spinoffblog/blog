@@ -43,7 +43,7 @@ def land_record_zoning_panel(record):
             "dashArray": "5, 5"  # This creates the dashed line effect
         },
         name="Property Boundary",
-        tooltip=folium.Tooltip(f"Property outline", permanent=False),
+        tooltip=folium.Tooltip(f"{record["formatted_address"]}", permanent=False),
     ).add_to(m)
 
     # Add permanent text label for property

@@ -7,7 +7,7 @@ def land_sales_suburb_scatter_plot_panel(subject_property, other_sales):
     # Extract the last sale price of the subject property
     subject_property_sales = subject_property.get("land_sale_records", [])
     if not subject_property_sales:
-        st.error("No sales data available for the subject property.")
+        st.warning("No sales data available for the subject property.")
         return
     last_sale = max(subject_property_sales, key=lambda x: x["date"])
     subject_price = last_sale["amount"]

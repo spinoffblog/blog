@@ -30,7 +30,7 @@ def get_property(id):
     if response.status_code == 200:
         return response.json()
     else:
-        st.error(f"Failed to fetch data for ID {id}")
+        st.warning(f"Failed to fetch data for ID {id}")
         return None
 
 
@@ -46,7 +46,7 @@ def get_financial_data(id):
     if response.status_code == 200:
         return response.json()
     else:
-        st.error(f"Failed to fetch financial data for ID {id}")
+        st.warning(f"Failed to fetch financial data for ID {id}")
         return None
 
 
@@ -63,7 +63,7 @@ def fetch_comparison_land_sales(suburb):
             result.append(sale)
         return result
     else:
-        st.error(f"Failed to fetch data for suburb {suburb}")
+        st.warning(f"Failed to fetch data for suburb {suburb}")
         return None
 
 

@@ -51,10 +51,10 @@ if id:
     financial_stats = get_financial_data(id)
     record_obj = LandRecord(record)
     st.write(f"## {record['house_number']} {record['road'].title()}")
+    land_record_details_panel.land_record_details_panel(record)
     if record:
         snapshot_tab, charts_tab, zoning_tab = st.tabs(["Snapshot", "Charts", "Zoning"])
         with snapshot_tab:
-            land_record_details_panel.land_record_details_panel(record)
             land_sales_panel.land_sales_panel(record)
             land_record_financials_panel.land_record_financials_panel(
                 record_obj, financial_stats
