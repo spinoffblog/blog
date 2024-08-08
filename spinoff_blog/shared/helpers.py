@@ -6,7 +6,7 @@ import inflect
 from thefuzz import process
 
 API_URL = os.getenv("API_URL")
-USE_LOCAL_DATA = os.getenv("USE_LOCAL_DATA", "false")
+USE_LOCAL_DATA = False  # os.getenv("USE_LOCAL_DATA", "false")
 
 USER_CURRENCY = "AUD"
 
@@ -18,11 +18,11 @@ CURRENCIES = {
 p = inflect.engine()
 
 
-def get_properties():
+def get_simple_addresses():
     if USE_LOCAL_DATA:
-        return load_local_properties()
+        return get_local_simple_addresses()
     else:
-        return []
+        return get_remote_simple_addresses()
 
 
 def get_property(id):
@@ -36,9 +36,9 @@ def get_property(id):
 
 def get_comparison_land_sales(suburb):
     if USE_LOCAL_DATA:
-        return load_local_comparison_land_sales()
+        return get_local_comparison_land_sales()
     else:
-        return fetch_comparison_land_sales(suburb)
+        return get_remote_comparison_land_sales(suburb)
 
 
 def get_financial_data(id):
@@ -51,7 +51,7 @@ def get_financial_data(id):
 
 
 @st.cache_data
-def fetch_comparison_land_sales(suburb):
+def get_remote_comparison_land_sales(suburb):
     response = requests.get(
         f"{API_URL}suburb-latest-landsalerecord/sales-by-suburb/?suburb={suburb}"
     )
@@ -67,14 +67,24 @@ def fetch_comparison_land_sales(suburb):
         return None
 
 
-def load_local_properties():
+@st.cache_data
+def get_remote_simple_addresses():
+    response = requests.get(f"{API_URL}simple-addresses.json")
+    if response.status_code == 200:
+        return response.json()
+    else:
+        st.warning("Failed to fetch data")
+        return None
+
+
+def get_local_simple_addresses():
     # Load the JSON file
     with open("spinoff_blog/data/simple-addresses.json", "r") as file:
         data = json.load(file)
     return data
 
 
-def load_local_comparison_land_sales():
+def get_local_comparison_land_sales():
     # Load the JSON file
     with open("spinoff_blog/data/comparison_land_sales.json", "r") as file:
         data = json.load(file)

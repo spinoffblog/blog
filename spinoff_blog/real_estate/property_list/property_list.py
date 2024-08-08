@@ -1,7 +1,7 @@
 import os
 import streamlit as st
 from st_keyup import st_keyup
-from spinoff_blog.shared.helpers import get_properties, fuzzy_match_address
+from spinoff_blog.shared.helpers import get_simple_addresses, fuzzy_match_address
 
 
 # Function to create a link to the details page
@@ -20,7 +20,7 @@ def streamlit_page():
     )
 
 
-properties = get_properties()
+properties = get_simple_addresses()
 # get single_family.properties.description from properties
 # properties = [property["formatted_address"] for property in properties]
 
