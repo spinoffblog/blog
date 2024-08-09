@@ -69,7 +69,8 @@ def get_remote_comparison_land_sales(suburb):
 
 @st.cache_data
 def get_remote_simple_addresses():
-    response = requests.get(f"{API_URL}simple-addresses.json")
+    url = f"{API_URL}simple-addresses/"
+    response = requests.get(url)
     if response.status_code == 200:
         return response.json()
     else:
