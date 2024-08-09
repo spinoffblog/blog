@@ -175,7 +175,7 @@ This post will explore the current value of residential house+land in Cottesloe.
 The key focus will be on the question "What is the average value of a m² of residential house+land land in Cottesloe over the past 12 months?".  The post will be updated with sales data as it becomes available.  Check back for updates.
 """
 # add an image
-st.image("./_pages/images/2024_07_05/cottesloe.jpg", caption="Cottesloe Beach")
+st.image("spinoff_blog/root/images/2024_07_05/cottesloe.jpg", caption="Cottesloe Beach")
 
 st.markdown("### Summary")
 st.metric("Average Cottesloe house+land cost per m²", f"${average_per_m2_in_2024:,.0f}")

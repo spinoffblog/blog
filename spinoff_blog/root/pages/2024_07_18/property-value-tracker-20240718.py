@@ -7,7 +7,7 @@ from datetime import timedelta
 # Load the data
 # @st.cache_data
 def load_data():
-    df = pd.read_csv("./_pages/data/2024_07_18/data.csv")
+    df = pd.read_csv("spinoff_blog/root/data/2024_07_18/data.csv")
     df["sale_date"] = pd.to_datetime(df["sale_date"])
     # convert 'suburb' column to title case
     df["suburb"] = df["suburb"].str.title()
