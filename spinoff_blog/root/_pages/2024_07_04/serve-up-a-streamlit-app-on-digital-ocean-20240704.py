@@ -312,9 +312,9 @@ Is always welcomed.  Please raise an issue at the [GitHub for this app](https://
 
 
 st.markdown(section_1)
-st.image("_pages/images/2024_07_04/_2024_07_04_01.png")
+st.image("spinoff_blog/root/images/2024_07_04/_2024_07_04_01.png")
 st.markdown(section_2)
-st.image("_pages/images/2024_07_04/_2024_07_04_02.png")
+st.image("spinoff_blog/root/images/2024_07_04/_2024_07_04_02.png")
 st.markdown(section_3)
-st.image("_pages/images/2024_07_04/_2024_07_04_03.png")
+st.image("spinoff_blog/root/images/2024_07_04/_2024_07_04_03.png")
 st.markdown(section_4)
