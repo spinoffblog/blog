@@ -20,13 +20,22 @@ p = inflect.engine()
 
 def get_simple_addresses():
     if USE_LOCAL_DATA:
-        return get_local_simple_addresses()
+        addresses = get_local_simple_addresses()
     else:
-        return get_remote_simple_addresses()
+        addresses = get_remote_simple_addresses()
+    # remove objects with duplicate formatted_address
+    seen = set()
+    unique_addresses = []
+    for item in addresses:
+        if item["formatted_address"] not in seen:
+            seen.add(item["formatted_address"])
+            unique_addresses.append(item)
+    return unique_addresses
 
 
 def get_property(id):
-    response = requests.get(f"{API_URL}landrecord/{id}/")
+    url = f"{API_URL}landrecord/by_slug/?slug={id}"
+    response = requests.get(url)
     if response.status_code == 200:
         return response.json()
     else:
@@ -93,6 +102,9 @@ def get_local_comparison_land_sales():
 
 
 def fuzzy_match_address(query, properties, score_cutoff=80, limit=None):
+    if not query or query == "":
+        return []
+
     # Extract just the names for initial matching
     addresses = [item["formatted_address"] for item in properties]
 
@@ -114,7 +126,17 @@ def fuzzy_match_address(query, properties, score_cutoff=80, limit=None):
     return results
 
 
-## Formatting
+def slugify(value):
+    components = [
+        value["house_number"],
+        value["road"],
+        value["city"],
+        value["state"],
+    ]
+    return "-".join(components).lower().replace(" ", "-")
+
+
+# Formatting
 
 
 def ordinalize_number(number):

@@ -14,6 +14,7 @@ class Geometry:
 class SaleRecord:
     amount: float
     date: str
+    formatted_address: str = ""
     house_number: str = ""
     road: str = ""
     land_area: float = 0.0

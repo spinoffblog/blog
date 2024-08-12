@@ -19,7 +19,8 @@ def land_sales_suburb_scatter_plot_panel(subject_property, other_sales):
     # Convert other sales to DataFrame
     df = pd.DataFrame(other_sales)
     df["date"] = pd.to_datetime(df["date"])
-    df["address"] = (df["house_number"] + " " + df["road"]).str.title()
+    # Todo - make this the normalized address
+    df["address"] = (df["formatted_address"]).str.title()
     df["amount_formatted"] = df["amount"].apply(lambda x: f"${x:,.0f}")
     df["is_subject"] = False  # Explicitly set is_subject to False for all other sales
 
