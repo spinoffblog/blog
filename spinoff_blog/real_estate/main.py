@@ -13,8 +13,9 @@ load_dotenv(file)
 
 def main():
     property_list = st.Page("./property_list/property_list.py")
+    listing_list = st.Page("./listing_list/listing_list.py")
     property_details = st.Page("./property_details/property_details.py")
-    pg = st.navigation(pages=[property_list, property_details])
+    pg = st.navigation(pages=[property_list, listing_list, property_details])
     pg.run()
 
 

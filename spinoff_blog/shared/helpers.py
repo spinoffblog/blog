@@ -18,6 +18,16 @@ CURRENCIES = {
 p = inflect.engine()
 
 
+def get_listings():
+    url = f"{API_URL}listings/"
+    response = requests.get(url)
+    if response.status_code == 200:
+        return response.json()
+    else:
+        st.warning("Failed to fetch listings data")
+        return None
+
+
 def get_simple_addresses():
     if USE_LOCAL_DATA:
         addresses = get_local_simple_addresses()
