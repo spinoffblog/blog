@@ -45,7 +45,8 @@ st.write(css_example, unsafe_allow_html=True)
 id = st.query_params.get("id")
 
 if id:
-    record = get_property(id)
+    address = get_property(id)
+    record = address["land_records"]
     if len(record) > 1:
         st.warning(
             "More than 1 property matches this address.  Using first record found"

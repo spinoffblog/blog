@@ -44,7 +44,7 @@ def get_simple_addresses():
 
 
 def get_property(id):
-    url = f"{API_URL}landrecord/by_slug/?slug={id}"
+    url = f"{API_URL}addresses/{id}/with_land_records/"
     response = requests.get(url)
     if response.status_code == 200:
         return response.json()
